@@ -1,23 +1,24 @@
-name: ✨New Feature
-description: Request a new feature or enhancement
-labels: ["feature"]
-title: "[FEAT]: "
+name: Feature Request
+description: Request a new feature or enhancement.
+type: 'feature'
+title: 'Feature: '
 body:
   - type: markdown
     attributes:
       value: |
-        Please make sure this feature request hasn't been already submitted by someone by looking through other open/closed issues
+        > [!TIP]
+        >Please check if there are any requests for already defined functions. It may already be defined and working!
 
   - type: textarea
     id: description
     attributes:
       label: Description
-      description: Give us a brief description of the feature or enhancement you would like
+      description: Please let us know about new features and improvements.
     validations:
       required: true
 
   - type: textarea
     id: additional-information
     attributes:
-      label: Additional Information
+      label: Additional Information (Comments)
       description: Give us some additional information on the feature request like proposed solutions, links, screenshots, etc.
