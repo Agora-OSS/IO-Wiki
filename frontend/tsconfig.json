@@ -1,0 +1,23 @@
+{
+	"extends": "astro/tsconfigs/strict",
+	"include": [".astro/types.d.ts", "**/*", ".prettierrc.mjs"],
+	"exclude": ["dist"],
+	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {
+			"@/*": ["./src/*"],
+			"@/i18n/*": ["./i18n/*"],
+			"@/mock/*": ["./mock/*"],
+			"@/e2e/*": ["./e2e/*"],
+			"@/layouts/*": ["src/layouts/*"]
+		},
+		"jsx": "preserve",
+		"jsxImportSource": "react",
+		"verbatimModuleSyntax": true,
+		"plugins": [
+			{
+				"name": "@astrojs/ts-plugin"
+			}
+		]
+	}
+}
