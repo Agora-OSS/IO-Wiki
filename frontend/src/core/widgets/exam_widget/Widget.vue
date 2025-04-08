@@ -1,15 +1,20 @@
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import {ButtonUI} from '@/ui/button'
+
+const title = ref('My Widget')
+
+</script>
+
 <template>
   <div class="widget">
     <h1>{{ title }}</h1>
     <p>This is a basic Vue 3 component.</p>
+    <ButtonUI>hello</ButtonUI>
   </div>
 </template>
 
-<script setup>
-import { ref } from 'vue'
-
-const title = ref('My Widget')
-</script>
 
 <style scoped>
 .widget {

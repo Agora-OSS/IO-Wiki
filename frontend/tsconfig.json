@@ -6,6 +6,8 @@
 		"baseUrl": ".",
 		"paths": {
 			"@/*": ["./src/*"],
+			"@/assets/*": ["./src/assets/*"],
+			"@/ui/*": ["./src/core/widgets/*"],
 			"@/i18n/*": ["./i18n/*"],
 			"@/mock/*": ["./mock/*"],
 			"@/e2e/*": ["./e2e/*"],
