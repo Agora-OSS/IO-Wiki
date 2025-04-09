@@ -1,9 +1,9 @@
-import { expect, test } from 'vitest';
+import { expect, test } from "vitest";
 
-test('should return a list of exams', async () => {
+test("should return a list of exams", async () => {
 	const exams = [
-		{ id: 1, name: 'Math' },
-		{ id: 2, name: 'Science' },
+		{ id: 1, name: "Math" },
+		{ id: 2, name: "Science" },
 	];
 
 	const getExams = () => {

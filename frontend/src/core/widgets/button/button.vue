@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import { cn } from '@/core/utils'
-import { buttonVariants } from "@/ui/button/button.config"
+import { cn } from "@/core/utils";
+import type { buttonVariants } from "@/ui/button/button.config";
 
 interface Props {
-  variant?: NonNullable<Parameters<typeof buttonVariants>[0]>['variant']
-  size?: NonNullable<Parameters<typeof buttonVariants>[0]>['size']
-  as?: string
+	variant?: NonNullable<Parameters<typeof buttonVariants>[0]>["variant"];
+	size?: NonNullable<Parameters<typeof buttonVariants>[0]>["size"];
+	as?: string;
 }
 
 withDefaults(defineProps<Props>(), {
-  as: 'button',
-})
+	as: "button",
+});
 </script>
 
 <template>
@@ -21,4 +21,11 @@ withDefaults(defineProps<Props>(), {
     <slot />
   </component>
 </template>
+
+<script lang="ts">
+export default {
+  name: 'ButtonUI',
+  inheritAttrs: false,
+}
+</script>
 

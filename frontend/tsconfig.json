@@ -1,6 +1,15 @@
 {
 	"extends": "astro/tsconfigs/strict",
-	"include": [".astro/types.d.ts", "**/*", ".prettierrc.mjs"],
+	"include": [
+		".astro/types.d.ts",
+		"e2e/**/*.ts",
+		"src/**/*.ts",
+		"src/**/*.d.ts",
+		"src/**/*.tsx",
+		"src/**/*.astro",
+		"src/**/*.vue",
+		".prettierrc.mjs"
+	],
 	"exclude": ["dist"],
 	"compilerOptions": {
 		"baseUrl": ".",

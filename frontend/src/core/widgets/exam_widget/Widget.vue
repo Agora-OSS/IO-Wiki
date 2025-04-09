@@ -1,10 +1,8 @@
-
 <script setup lang="ts">
-import { ref } from 'vue'
-import {ButtonUI} from '@/ui/button'
+import { ButtonUI } from "@/ui/button";
+import { ref } from "vue";
 
-const title = ref('My Widget')
-
+const title = ref("My Widget");
 </script>
 
 <template>
@@ -15,6 +13,12 @@ const title = ref('My Widget')
   </div>
 </template>
 
+
+<script lang="ts">
+export default {
+  name: 'WidgetUi',
+}
+</script>
 
 <style scoped>
 .widget {

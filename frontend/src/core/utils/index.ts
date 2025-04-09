@@ -1,4 +1,3 @@
-import { cn } from '@/core/utils/style'
+import { cn } from "@/core/utils/style";
 
-
-export { cn }
+export { cn };
