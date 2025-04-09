@@ -1,6 +1,7 @@
 {
 	"extends": "astro/tsconfigs/strict",
 	"include": [
+		"./*.ts",
 		".astro/types.d.ts",
 		"e2e/**/*.ts",
 		"src/**/*.ts",
