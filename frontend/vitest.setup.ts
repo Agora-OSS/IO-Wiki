@@ -1,14 +1,14 @@
-import handlers from "@/mock/handler";
-import { setupServer } from "msw/node";
+import { server } from "@/mock/node";
 import { afterAll, afterEach, beforeAll } from "vitest";
 
-const server = setupServer(...handlers);
-
 beforeAll(() => {
-	console.info("Starting MSW server...");
-	server.listen({ onUnhandledRequest: "error" });
+	server.listen();
 });
 
-afterAll(() => server.close());
+afterEach(() => {
+	server.resetHandlers();
+});
 
-afterEach(() => server.resetHandlers());
+afterAll(() => {
+	server.close();
+});

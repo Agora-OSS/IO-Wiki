@@ -4,6 +4,7 @@
 		"./*.ts",
 		".astro/types.d.ts",
 		"e2e/**/*.ts",
+		"mocks/**/*.ts",
 		"src/**/*.ts",
 		"src/**/*.d.ts",
 		"src/**/*.tsx",
@@ -18,7 +19,7 @@
 			"@/assets/*": ["./src/assets/*"],
 			"@/ui/*": ["./src/core/widgets/*"],
 			"@/i18n/*": ["./i18n/*"],
-			"@/mock/*": ["./mock/*"],
+			"@/mock/*": ["mocks/*"],
 			"@/e2e/*": ["./e2e/*"],
 			"@/layouts/*": ["src/layouts/*"]
 		},
@@ -28,7 +29,12 @@
 		"plugins": [
 			{
 				"name": "@astrojs/ts-plugin"
+			},
+			{
+				"transform": "typia/lib/transform"
 			}
-		]
+		],
+		"strictNullChecks": true,
+		"strict": true
 	}
 }
