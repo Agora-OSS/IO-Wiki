@@ -8,8 +8,7 @@
 		"src/**/*.d.ts",
 		"src/**/*.tsx",
 		"src/**/*.astro",
-		"src/**/*.vue",
-		".prettierrc.mjs"
+		"src/**/*.vue"
 	],
 	"exclude": ["dist"],
 	"compilerOptions": {
