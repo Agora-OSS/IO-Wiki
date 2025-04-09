@@ -1,8 +1,7 @@
-import type { IDomain } from "@/core/utils/domain";
 import type { tags } from "typia";
 import typia from "typia";
 
-export class Exam implements IDomain {
+export class Exam {
 	readonly id;
 	readonly name;
 	readonly description;

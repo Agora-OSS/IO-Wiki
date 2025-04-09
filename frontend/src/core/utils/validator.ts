@@ -1,23 +1,25 @@
 import { map, pipe, toArray } from "@fxts/core";
 import type typia from "typia";
-import type { IDomain } from "./domain";
 
-export function validatePipe<T, D extends IDomain>(
+export function validatePipe<T, D>(
 	protocols: T[],
 	mapToEntity: (protocol: T) => D,
 	validator: (input: unknown) => typia.IValidation<D>,
+	defaultValue?: D,
 ): Promise<D[]>;
 
-export function validatePipe<T, D extends IDomain>(
+export function validatePipe<T, D>(
 	protocols: Promise<T[]>,
 	mapToEntity: (protocol: T) => D,
 	validator: (input: unknown) => typia.IValidation<D>,
+	defaultValue?: D,
 ): Promise<D[]>;
 
-export function validatePipe<T, D extends IDomain>(
+export function validatePipe<T, D>(
 	protocols: T[] | Promise<T[]>,
 	mapToEntity: (protocol: T) => D,
 	validator: (input: unknown) => typia.IValidation<D>,
+	defaultValue?: D,
 ) {
 	return pipe(
 		protocols,
@@ -27,7 +29,12 @@ export function validatePipe<T, D extends IDomain>(
 			if (validateResult.success) {
 				return validateResult.data;
 			}
-			return validateResult.errors;
+
+			console.error(
+				`Validator Error: ${validateResult.errors.map((error) => error.path).join(", ")}`,
+			);
+
+			return defaultValue;
 		}),
 		toArray,
 	);
