@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { ExamProtocol } from "../models/ExamModel";
+import type { ExamProtocol } from "../protocol/ExamProtocol";
 
 export const fetchAllExams = async (): Promise<ExamProtocol[]> => {
 	const response = await axios.get<ExamProtocol[]>("/api/exams", {

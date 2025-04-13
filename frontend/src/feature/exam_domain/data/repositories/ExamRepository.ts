@@ -1,11 +1,10 @@
 import { validatePipe } from "@/core/utils/validator";
 import { Exam } from "@/feature/exam_domain/domain/entities";
-import type { ExamRepository } from "@/feature/exam_domain/domain/repository";
 import { examValidator } from "../../domain/entities/Exam";
 import { fetchAllExams } from "../datasources";
-import type { ExamProtocol } from "../models";
+import type { ExamProtocol } from "../protocol";
 
-export const exampleRepository: ExamRepository = {
+export const exampleRepository = {
 	async getExamList(): Promise<Exam[]> {
 		const defaultValue: Exam = {
 			id: "77d73d7a-99e6-407f-880b-a6b257ac1485",
@@ -46,3 +45,7 @@ export const exampleRepository: ExamRepository = {
 		throw new Error("Method not implemented.");
 	},
 };
+
+type exampleRepositoryType = typeof exampleRepository;
+
+export type { exampleRepositoryType };

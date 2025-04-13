@@ -1,4 +1,4 @@
-import type { ExamProtocol } from "@/feature/exam_domain/data/models";
+import type { ExamProtocol } from "@/feature/exam_domain/data/protocol";
 import type { Exam } from "@/feature/exam_domain/domain/entities";
 import { http, HttpResponse } from "msw";
 import { random } from "typia";
