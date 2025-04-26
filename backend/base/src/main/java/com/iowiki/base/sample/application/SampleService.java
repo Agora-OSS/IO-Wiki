@@ -4,7 +4,6 @@ import com.iowiki.base.sample.adapter.mapper.SampleMapper;
 import com.iowiki.base.sample.application.command.CreateSampleCommand;
 import com.iowiki.base.sample.application.port.in.ManageSampleUsecase;
 import com.iowiki.base.sample.application.port.out.SampleRepositoryPort;
-import com.iowiki.base.sample.domain.Sample;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +15,7 @@ public class SampleService implements ManageSampleUsecase {
 
     @Override
     public CreateSampleCommand.Response create(CreateSampleCommand.Request requestCommand) {
-        Sample sample = sampleMapper.toDomain(requestCommand);
+        var sample = sampleMapper.toDomain(requestCommand);
         sample.generateId();
 
         return sampleMapper.toResponse(sampleRepositoryPort.create(sample));
