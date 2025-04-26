@@ -26,8 +26,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
-	// TODO: Flyway
-	// implementation 'org.flywaydb:flyway-core'
+	// Flyway
+	implementation 'org.flywaydb:flyway-database-postgresql'
 
 	// QueryDSL
 	implementation 'com.querydsl:querydsl-jpa:5.0.0'

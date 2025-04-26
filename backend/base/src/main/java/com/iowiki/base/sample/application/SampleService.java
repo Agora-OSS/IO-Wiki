@@ -8,8 +8,6 @@ import com.iowiki.base.sample.domain.Sample;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
-
 @Service
 @RequiredArgsConstructor
 public class SampleService implements ManageSampleUsecase {
@@ -21,12 +19,6 @@ public class SampleService implements ManageSampleUsecase {
         Sample sample = sampleMapper.toDomain(requestCommand);
         sample.generateId();
 
-        return toResponse(sampleRepositoryPort.create(sample));
-    }
-
-    private CreateSampleCommand.Response toResponse(UUID saved) {
-        return CreateSampleCommand.Response.builder()
-                .id(saved)
-                .build();
+        return sampleMapper.toResponse(sampleRepositoryPort.create(sample));
     }
 }
