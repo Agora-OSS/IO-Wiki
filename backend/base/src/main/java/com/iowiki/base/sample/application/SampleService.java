@@ -1,5 +1,6 @@
 package com.iowiki.base.sample.application;
 
+import com.iowiki.base.sample.adapter.mapper.SampleMapper;
 import com.iowiki.base.sample.application.command.CreateSampleCommand;
 import com.iowiki.base.sample.application.port.in.ManageSampleUsecase;
 import com.iowiki.base.sample.application.port.out.SampleRepositoryPort;
@@ -13,12 +14,12 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class SampleService implements ManageSampleUsecase {
     private final SampleRepositoryPort sampleRepositoryPort;
+    private final SampleMapper sampleMapper;
 
     @Override
     public CreateSampleCommand.Response create(CreateSampleCommand.Request requestCommand) {
-        Sample sample = Sample.from(requestCommand.name());
-
-        // sample 도메인 로직 수행
+        Sample sample = sampleMapper.toDomain(requestCommand);
+        sample.generateId();
 
         return toResponse(sampleRepositoryPort.create(sample));
     }

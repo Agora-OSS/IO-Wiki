@@ -2,6 +2,7 @@ package com.iowiki.base.sample.adapter.in.web;
 
 import com.iowiki.base.sample.application.command.CreateSampleCommand;
 import com.iowiki.base.sample.application.port.in.ManageSampleUsecase;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SampleController {
     private final ManageSampleUsecase manageSampleUsecase;
 
+    @Operation(summary = "Create 예시", description = "Create 예시 API")
     @PostMapping("/create")
     public ResponseEntity<CreateSampleCommand.Response> create(@Valid @RequestBody CreateSampleCommand.Request requestCommand) {
         return ResponseEntity.status(HttpStatus.CREATED)

@@ -26,7 +26,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
-	// Flyway
+	// TODO: Flyway
 	// implementation 'org.flywaydb:flyway-core'
 
 	// QueryDSL
@@ -38,9 +38,17 @@ dependencies {
 	// DB
 	runtimeOnly 'org.postgresql:postgresql'
 
-	// 기타
+	// Lombok, Mapstruct
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
+
+	implementation 'org.mapstruct:mapstruct:1.5.5.Final'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+
+	// SpringDoc
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
+
+	// DevTools
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
 	// 테스트
