@@ -1,6 +1,6 @@
 package com.iowiki.base.sample.adapter.out.persistence;
 
-import com.iowiki.base.sample.adapter.mapper.SampleMapper;
+import com.iowiki.base.sample.mapper.SampleMapper;
 import com.iowiki.base.sample.application.port.out.SampleRepositoryPort;
 import com.iowiki.base.sample.domain.Sample;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,6 @@
 package com.iowiki.base.sample.application;
 
-import com.iowiki.base.sample.adapter.mapper.SampleMapper;
+import com.iowiki.base.sample.mapper.SampleMapper;
 import com.iowiki.base.sample.application.command.CreateSampleCommand;
 import com.iowiki.base.sample.application.port.in.ManageSampleUsecase;
 import com.iowiki.base.sample.application.port.out.SampleRepositoryPort;

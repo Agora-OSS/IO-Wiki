@@ -1,4 +1,4 @@
-package com.iowiki.base.sample.adapter.mapper;
+package com.iowiki.base.sample.mapper;
 
 import com.iowiki.base.sample.adapter.out.persistence.SampleEntity;
 import com.iowiki.base.sample.application.command.CreateSampleCommand;
