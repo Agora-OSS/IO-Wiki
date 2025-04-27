@@ -1,5 +1,6 @@
 package com.iowiki.base.sample.mapper;
 
+import com.iowiki.base.sample.adapter.in.web.dto.SampleCreateDto;
 import com.iowiki.base.sample.adapter.out.persistence.SampleEntity;
 import com.iowiki.base.sample.application.command.CreateSampleCommand;
 import com.iowiki.base.sample.domain.Sample;
@@ -10,10 +11,10 @@ import java.util.UUID;
 
 @Mapper(componentModel = "spring")
 public interface SampleMapper {
-    Sample toDomain(SampleEntity sampleEntity);
-    Sample toDomain(CreateSampleCommand.Request requestCommand);
+    CreateSampleCommand toCommand(SampleCreateDto.Request request);
+    Sample toDomain(CreateSampleCommand command);
     SampleEntity toEntity(Sample sample);
 
     @Mapping(source = "saved", target = "id")
-    CreateSampleCommand.Response toResponse(UUID saved);
+    SampleCreateDto.Response toResponse(UUID saved);
 }
