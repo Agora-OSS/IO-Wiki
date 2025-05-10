@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ButtonUI } from "@/ui/button";
+import { ButtonUI } from "@/core/widgets/button";
 import { ref } from "vue";
 
 const title = ref("My Widget");
