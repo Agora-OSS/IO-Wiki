@@ -12,7 +12,7 @@
     "lint": "biome lint --write .",
     "lint:fix": "biome check --write .",
     "astro": "astro",
-    "prepare": "ts-patch install && lefthook install",
+    "prepare": "ts-patch install",
     "test:browser": "vitest --workspace=vitest.workspace.ts"
   },
   "dependencies": {
