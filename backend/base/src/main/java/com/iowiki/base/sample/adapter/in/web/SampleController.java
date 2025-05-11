@@ -1,5 +1,6 @@
 package com.iowiki.base.sample.adapter.in.web;
 
+import com.iowiki.base.common.web.CommonResponse;
 import com.iowiki.base.sample.adapter.in.web.dto.SampleCreateDto;
 import com.iowiki.base.sample.application.port.in.CreateSampleUsecase;
 import com.iowiki.base.sample.mapper.SampleMapper;
@@ -22,8 +23,8 @@ public class SampleController {
 
     @Operation(summary = "Create 예시", description = "Create 예시 API")
     @PostMapping("/create")
-    public ResponseEntity<SampleCreateDto.Response> create(@Valid @RequestBody SampleCreateDto.Request createRequest) {
+    public ResponseEntity<CommonResponse<SampleCreateDto.Response>> create(@Valid @RequestBody SampleCreateDto.Request createRequest) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(createSampleUsecase.create(sampleMapper.toCommand(createRequest)));
+                .body(CommonResponse.success(createSampleUsecase.create(sampleMapper.toCommand(createRequest))));
     }
 }
