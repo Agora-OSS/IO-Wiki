@@ -1,0 +1,40 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "include": [
+    "./*.ts",
+    ".astro/types.d.ts",
+    "e2e/**/*.ts",
+    "mocks/**/*.ts",
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.astro",
+    "src/**/*.vue"
+  ],
+  "exclude": ["dist", "node_modules"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/assets/*": ["./src/assets/*"],
+      "@/ui/*": ["./src/core/widgets/*"],
+      "@/i18n/*": ["./i18n/*"],
+      "@/mock/*": ["mocks/*"],
+      "@/e2e/*": ["./e2e/*"],
+      "@/layouts/*": ["src/layouts/*"]
+    },
+    "jsx": "preserve",
+    "jsxImportSource": "react",
+    "verbatimModuleSyntax": true,
+    "plugins": [
+      {
+        "name": "@astrojs/ts-plugin"
+      },
+      {
+        "transform": "typia/lib/transform"
+      }
+    ],
+    "strictNullChecks": true,
+    "strict": true
+  }
+}
