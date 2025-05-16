@@ -2,13 +2,13 @@ import { logger } from "@nanostores/logger";
 import { atom } from "nanostores";
 
 export class Sidebar {
-  readonly state;
+  readonly isOpen = atom(false);
+  readonly collapsed = atom(false);
 
   constructor() {
-    this.state = atom<boolean>(false);
-
     logger({
-      SidebarStore: this.state,
+      "SidebarStore - isOpen": this.isOpen,
+      "SidebarStore - collapsed": this.collapsed,
     });
   }
 }

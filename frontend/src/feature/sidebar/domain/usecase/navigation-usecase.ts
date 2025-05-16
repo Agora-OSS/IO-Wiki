@@ -4,19 +4,27 @@ class NavigationUsecase {
   private readonly sidebar = new Sidebar();
 
   openSidebar() {
-    this.sidebar.state.set(true);
-
-    return this.sidebar.state.get();
+    this.sidebar.isOpen.set(true);
   }
 
   closeSidebar() {
-    this.sidebar.state.set(false);
-
-    return this.sidebar.state.get();
+    this.sidebar.isOpen.set(false);
   }
 
-  currentSidebarState() {
-    return this.sidebar.state.get();
+  collapse() {
+    this.sidebar.collapsed.set(true);
+  }
+
+  stretch() {
+    this.sidebar.collapsed.set(false);
+  }
+
+  getIsOpenSidebarStore() {
+    return this.sidebar.isOpen;
+  }
+
+  getCollapsedStore() {
+    return this.sidebar.collapsed;
   }
 }
 

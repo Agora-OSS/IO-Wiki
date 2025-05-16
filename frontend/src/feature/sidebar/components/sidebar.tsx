@@ -8,6 +8,7 @@ import {
   Home,
   LifeBuoy,
   LogIn,
+  Menu,
   UserPlus,
   X,
 } from "lucide-react";
@@ -23,17 +24,17 @@ import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { useSidebar } from "./use-sidebar";
 
 export const Sidebar: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
-  const [collapsed, setCollapsed] = useState(false);
   const [isCreateDocumentOpen, setIsCreateDocumentOpen] = useState(false);
   const isMobile = useMobile();
-  const { current: currentSidebarState, open, close } = useSidebar();
-
+  const {
+    sidebarCollapsedState,
+    sidebarOpenState,
+    collapse,
+    stretch,
+    open,
+    close,
+  } = useSidebar();
   // 모바일에서는 항상 전체 너비로 표시
-  useEffect(() => {
-    if (isMobile) {
-      setCollapsed(false);
-    }
-  }, [isMobile]);
 
   const handleCreateDocument = () => {
     setIsCreateDocumentOpen(true);
@@ -49,7 +50,7 @@ export const Sidebar: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
   return (
     <>
       {/* 모바일 백드롭 */}
-      {isMobile && currentSidebarState && (
+      {isMobile && sidebarOpenState && (
         <div
           className="fixed inset-0 z-40 bg-background/80 backdrop-blur-sm"
           onClick={handleBackdropClick}
@@ -66,10 +67,10 @@ export const Sidebar: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
           className={cn(
             "fixed z-50 flex h-screen flex-col border-r bg-background transition-all duration-300",
             isMobile
-              ? currentSidebarState
+              ? sidebarOpenState
                 ? "left-0 w-[280px]"
                 : "-left-[280px] w-[280px]"
-              : collapsed
+              : sidebarCollapsedState
                 ? "w-16 items-center"
                 : "w-64",
             !isMobile && "relative",
@@ -78,7 +79,7 @@ export const Sidebar: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
           <div className="flex h-14 items-center border-b px-3 py-4">
             <a href="/" className="flex items-center gap-2">
               <Command className="h-6 w-6" />
-              {(!collapsed || isMobile) && (
+              {(!sidebarCollapsedState || isMobile) && (
                 <span className="font-semibold">IO Wiki</span>
               )}
             </a>
@@ -94,12 +95,12 @@ export const Sidebar: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
                   <span className="sr-only">Close sidebar</span>
                 </Button>
               ) : (
-                !collapsed && (
+                !sidebarCollapsedState && (
                   <Button
                     className=" cursor-pointer"
                     variant="ghost"
                     size="icon"
-                    onClick={() => setCollapsed(!collapsed)}
+                    onClick={() => collapse()}
                   >
                     <ArrowLeftFromLine className="h-4 w-4" />
                     <span className="sr-only">Toggle sidebar</span>
@@ -114,7 +115,7 @@ export const Sidebar: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
                 icon={Home}
                 label="Home"
                 href="/"
-                collapsed={collapsed && !isMobile}
+                collapsed={sidebarCollapsedState && !isMobile}
                 target="_self"
               />
 
@@ -127,25 +128,25 @@ export const Sidebar: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
                   icon={LogIn}
                   label="로그인"
                   href="/login"
-                  collapsed={collapsed && !isMobile}
+                  collapsed={sidebarCollapsedState && !isMobile}
                 />
                 <NavItem
                   icon={UserPlus}
                   label="회원가입"
                   href="/register"
-                  collapsed={collapsed && !isMobile}
+                  collapsed={sidebarCollapsedState && !isMobile}
                 />
                 <NavItem
                   icon={BookOpen}
                   label="Documentation"
                   href="/docs"
-                  collapsed={collapsed && !isMobile}
+                  collapsed={sidebarCollapsedState && !isMobile}
                 />
                 <NavItem
                   icon={LifeBuoy}
                   label="Support"
                   href="/support"
-                  collapsed={collapsed && !isMobile}
+                  collapsed={sidebarCollapsedState && !isMobile}
                 />
               </>
               {/* TODO : Implement Authentication Logic
@@ -175,12 +176,12 @@ export const Sidebar: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
             )} 
           </div>*/}
 
-          {collapsed && (
+          {!isMobile && sidebarCollapsedState && (
             <Button
               className="mb-4 cursor-pointer"
               variant="ghost"
               size="icon"
-              onClick={() => setCollapsed(!collapsed)}
+              onClick={() => stretch()}
             >
               <ArrowRightFromLine className="h-4 w-4" />
               <span className="sr-only">Toggle sidebar</span>
@@ -188,6 +189,14 @@ export const Sidebar: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
           )}
         </div>
       </TooltipProvider>
+      {isMobile && (
+        <div className="border-b p-4">
+          <Button variant="ghost" size="icon" onClick={() => open()}>
+            <Menu className="h-6 w-6" />
+            <span className="sr-only">Open menu</span>
+          </Button>
+        </div>
+      )}
     </>
   );
 };
