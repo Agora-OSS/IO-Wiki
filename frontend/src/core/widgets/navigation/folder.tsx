@@ -1,8 +1,8 @@
-import type React from "react";
-import { useState, type PropsWithChildren } from "react";
-import { ChevronRight, ChevronDown, FileText } from "lucide-react";
-import { NavItem } from "@/core/widgets/navigation";
 import { cn } from "@/core/utils";
+import { NavItem } from "@/core/widgets/navigation";
+import { ChevronDown, ChevronRight, FileText } from "lucide-react";
+import type React from "react";
+import { type PropsWithChildren, useState } from "react";
 
 interface NavFolderProps {
   label: string;

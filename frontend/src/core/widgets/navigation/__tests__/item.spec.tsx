@@ -1,6 +1,6 @@
+import { render, screen } from "@testing-library/react";
 import { beforeEach, expect, it } from "vitest";
 import { NavItem } from "..";
-import { render, screen } from "@testing-library/react";
 
 beforeEach(() => {
   render(

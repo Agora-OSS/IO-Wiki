@@ -2,21 +2,23 @@
 
 import { cn } from "@/core/utils";
 import { useMobile } from "@/core/utils/useMobile";
-import { useSidebar } from "@/core/utils/useSidebar";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/core/widgets/tooltip";
+import { useSidebar } from "@/feature/sidebar/components/use-sidebar";
 
 import type React from "react";
+import type { HTMLAttributeAnchorTarget } from "react";
 
 interface NavItemProps {
   icon: React.ElementType;
   label: string;
   href: string;
   collapsed: boolean;
+  target?: HTMLAttributeAnchorTarget;
 }
 
 export function NavItem({
@@ -24,16 +26,14 @@ export function NavItem({
   label,
   href,
   collapsed,
+  target = "_blank",
 }: NavItemProps) {
-  const linkProps = external
-    ? { target: "_blank", rel: "noopener noreferrer" }
-    : {};
   const { close } = useSidebar();
   const isMobile = useMobile();
 
   const handleClick = () => {
     if (isMobile) {
-      close()
+      close();
     }
   };
 
@@ -42,7 +42,7 @@ export function NavItem({
       <Tooltip>
         <TooltipTrigger asChild>
           <a
-            target="_blank"
+            target={target}
             rel="noreferrer"
             href={href}
             className={cn(

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { navigationUsecase as NavigationUsecase } from "../NavigationUsecase";
+import { navigationUsecase as NavigationUsecase } from "../navigation-usecase";
 
 describe("NavigationUsecase test", () => {
   test("the navigation sidebar init state is closed(false)", async () => {

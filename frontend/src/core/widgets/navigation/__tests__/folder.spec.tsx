@@ -1,7 +1,7 @@
-import { beforeEach, expect, it } from "vitest";
-import { NavFolder, NavItem } from "..";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { beforeEach, expect, it } from "vitest";
+import { NavFolder, NavItem } from "..";
 
 beforeEach(() => {
   render(
