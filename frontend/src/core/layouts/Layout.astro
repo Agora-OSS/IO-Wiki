@@ -1,5 +1,6 @@
 ---
 import "@/styles/global.css";
+import { Sidebar } from "@/feature/sidebar/components";
 ---
 
 <!doctype html>
@@ -29,10 +30,13 @@ import "@/styles/global.css";
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>IO Wiki</title>
 	</head>
 	<body>
-		<slot />
+		<div class="flex min-h-screen flex-col md:flex-row">
+			<Sidebar client:load={true} />
+			<slot />
+		</div>
 	</body>
 </html>
 
