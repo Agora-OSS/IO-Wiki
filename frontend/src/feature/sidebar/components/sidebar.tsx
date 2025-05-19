@@ -191,7 +191,7 @@ export const Sidebar: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
         </div>
       </TooltipProvider>
       {isMobile && (
-        <div className="border-b p-4">
+        <div className="absolute w-full border-b p-4">
           <Button variant="ghost" size="icon" onClick={() => open()}>
             <Menu className="h-6 w-6" />
             <span className="sr-only">Open menu</span>
