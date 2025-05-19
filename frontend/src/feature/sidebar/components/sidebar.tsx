@@ -12,7 +12,7 @@ import {
   UserPlus,
   X,
 } from "lucide-react";
-import { type PropsWithChildren, useEffect, useState } from "react";
+import { type PropsWithChildren, useState } from "react";
 
 import { TooltipProvider } from "@/core/widgets/tooltip";
 
@@ -129,6 +129,7 @@ export const Sidebar: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
                   label="로그인"
                   href="/login"
                   collapsed={sidebarCollapsedState && !isMobile}
+                  target="_self"
                 />
                 <NavItem
                   icon={UserPlus}
