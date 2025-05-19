@@ -9,19 +9,38 @@
     "src/**/*.d.ts",
     "src/**/*.tsx",
     "src/**/*.astro",
-    "src/**/*.vue"
+    "src/**/*.vue",
+    "astro.config.ts",
+    "vitest.config.js"
   ],
-  "exclude": ["dist", "node_modules"],
+  "exclude": [
+    "dist",
+    "node_modules"
+  ],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "@/assets/*": ["./src/assets/*"],
-      "@/ui/*": ["./src/core/widgets/*"],
-      "@/i18n/*": ["./i18n/*"],
-      "@/mock/*": ["mocks/*"],
-      "@/e2e/*": ["./e2e/*"],
-      "@/layouts/*": ["src/layouts/*"]
+      "@/*": [
+        "./src/*"
+      ],
+      "@/assets/*": [
+        "./src/assets/*"
+      ],
+      "@/ui/*": [
+        "./src/core/widgets/*"
+      ],
+      "@/i18n/*": [
+        "./i18n/*"
+      ],
+      "@/mock/*": [
+        "mocks/*"
+      ],
+      "@/e2e/*": [
+        "./e2e/*"
+      ],
+      "@/layouts/*": [
+        "src/layouts/*"
+      ]
     },
     "jsx": "preserve",
     "jsxImportSource": "react",
