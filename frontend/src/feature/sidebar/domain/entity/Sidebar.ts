@@ -1,9 +1,15 @@
 import { logger } from "@nanostores/logger";
-import { atom } from "nanostores";
+import { persistentAtom } from "@nanostores/persistent";
 
 export class Sidebar {
-  readonly isOpen = atom(false);
-  readonly collapsed = atom(false);
+  readonly isOpen = persistentAtom<boolean>("sidebar", false, {
+    encode: JSON.stringify,
+    decode: JSON.parse,
+  });
+  readonly collapsed = persistentAtom<boolean>("side-collapsed", false, {
+    encode: JSON.stringify,
+    decode: JSON.parse,
+  });
 
   constructor() {
     logger({
