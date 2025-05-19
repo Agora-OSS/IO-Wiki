@@ -20,6 +20,7 @@
     "@astrojs/react": "^4.2.3",
     "@astrojs/ts-plugin": "^1.10.4",
     "@astrojs/vue": "^5.0.9",
+    "@nanostores/persistent": "^1.0.0",
     "@nanostores/react": "github:nanostores/react",
     "@nanostores/vue": "github:nanostores/vue",
     "@radix-ui/react-scroll-area": "^1.2.8",
