@@ -25,7 +25,7 @@ describe("NavigationUsecase test", () => {
   });
 
   test("navigation sidebar strtech then state change to true", async () => {
-    NavigationUsecase.stretch();
+    NavigationUsecase.stretchSidebar();
     expect(NavigationUsecase.getCollapsedStore().get()).toBeFalsy();
   });
 });
