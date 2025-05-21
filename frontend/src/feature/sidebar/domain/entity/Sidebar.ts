@@ -17,4 +17,20 @@ export class Sidebar {
       "SidebarStore - collapsed": this.collapsed,
     });
   }
+
+  open() {
+    this.isOpen.set(true);
+  }
+
+  close() {
+    this.isOpen.set(false);
+  }
+
+  collapse() {
+    this.collapsed.set(true);
+  }
+
+  stretch() {
+    this.collapsed.set(false);
+  }
 }
