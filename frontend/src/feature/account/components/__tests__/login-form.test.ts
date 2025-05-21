@@ -1,4 +1,4 @@
-import { LoginForm } from "@/feature/login/components";
+import { LoginForm } from "@/feature/account/components";
 import reactRenderer from "@astrojs/react/server.js";
 import { experimental_AstroContainer as AstroContainer } from "astro/container";
 import { expect, it } from "vitest";
