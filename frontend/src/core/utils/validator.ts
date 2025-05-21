@@ -1,39 +1,33 @@
-import { filter, map, pipe, toArray } from "@fxts/core";
+import { filter, map, pipe, toArray, toAsync } from "@fxts/core";
 import type { IValidation } from "typia";
+import typia from "typia";
 
 export function toEntity<T, D>(
-  protocols: T[],
-  mapToEntity: (protocol: T) => D,
-  validator: (input: unknown) => IValidation<D>,
-): Promise<D[]>;
-
-export function toEntity<T, D>(
-  protocols: Promise<T[]>,
-  mapToEntity: (protocol: T) => D,
-  validator: (input: unknown) => IValidation<D>,
-): Promise<D[]>;
-
-export function toEntity<T, D>(
-  protocols: T[] | Promise<T[]>,
-  mapToEntity: (protocol: T) => D,
+  data: T | T[],
+  mapToEntity: (data: T) => D,
   validator: (input: unknown) => IValidation<D>,
 ) {
+  const datas = Array.isArray(data) ? data : [data];
+
   return pipe(
-    protocols,
-    (protocols) => protocols.map((protocol) => mapToEntity(protocol)),
-    map((entity) => {
-      const validateResult = validator(entity);
-      if (validateResult.success) {
-        return validateResult.data;
-      }
+    validateEntity(datas, mapToEntity, validator),
+    filter((validatedEntity) => validatedEntity.success),
+    map((validatedEntity) => validatedEntity.data),
+    toArray,
+  );
+}
 
-      console.error(
-        `Validator Error: ${validateResult.errors.map((error) => error.path).join(", ")}`,
-      );
+export function validateEntity<T, D>(
+  data: T | T[],
+  mapToEntity: (data: T) => D,
+  validator: (input: unknown) => IValidation<D>,
+) {
+  const datas = Array.isArray(data) ? data : [data];
 
-      return null;
-    }),
-    filter((entity) => entity !== null),
+  return pipe(
+    datas,
+    map(mapToEntity),
+    map((entity) => validator(entity)),
     toArray,
   );
 }
