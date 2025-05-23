@@ -12,7 +12,7 @@ export class Account {
 
   private constructor(
     email: string & Format<"email">,
-    password?: string & tags.Pattern<"(?=.*[A-Za-z])(?=.*d)[A-Za-zd]{8,}$">,
+    password: string & tags.Pattern<"(?=.*[A-Za-z])(?=.*d)[A-Za-zd]{8,}$">,
   ) {
     this.email = email;
     this.password = password;
@@ -20,7 +20,7 @@ export class Account {
 
   static create(account: AccountType | null) {
     return account === null
-      ? new Account("", undefined)
+      ? new Account("", "")
       : new Account(account.email, account.password);
   }
 

@@ -1,12 +1,22 @@
 import { validateEntity } from "@/core/utils/validator";
 import { Account, type AccountType } from "@/feature/account/domain/entities";
-import { fx, pipe } from "@fxts/core";
+import { flatMap, fx, map, pipe, take, toArray } from "@fxts/core";
+import { createAccount, doLogin } from "@/feature/account/data/repository";
 
 class AccountUsecase {
-  login(account: AccountType) {
-    Account.create({ ...account });
+  async login(loginAccount: AccountType) {
+    const validResult = pipe(
+      [Account.create({ ...loginAccount })],
+      flatMap((account) => this.validateAccountInfo(account)),
+      take(1),
+      toArray,
+    )[0];
 
-    // curl to login backend
+    if (!validResult.success) {
+      return validResult.errors;
+    }
+
+    return await doLogin(validResult.data);
   }
 
   validateAccountInfo(accountData: AccountType) {
@@ -17,8 +27,19 @@ class AccountUsecase {
     );
   }
 
-  register(accountData: AccountType) {
-    // do something
+  async register(accountData: AccountType) {
+    const validResult = pipe(
+      [Account.create({ ...accountData })],
+      flatMap((account) => this.validateAccountInfo(account)),
+      take(1),
+      toArray,
+    )[0];
+
+    if (!validResult.success) {
+      return validResult.errors;
+    }
+
+    return await createAccount(validResult.data);
   }
 }
 

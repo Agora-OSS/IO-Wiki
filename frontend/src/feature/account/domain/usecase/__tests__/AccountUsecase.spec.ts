@@ -6,6 +6,7 @@ import {
 import { flat } from "@fxts/core";
 import { describe, expect, test } from "vitest";
 import { AccountUsecase } from "../account-usecase";
+import { is, type IValidation } from "typia";
 
 describe("AccountUsecase test", () => {
   beforeEach(() => {});
@@ -13,7 +14,15 @@ describe("AccountUsecase test", () => {
   test("should complete login execution successfully", async () => {
     const account = createAccountMocks(1)[0];
 
-    AccountUsecase.login(account);
+    expect(await AccountUsecase.login(account)).toBeTruthy();
+  });
+
+  test("should return an IError object when login violates validation policies.", async () => {
+    const account = createEncorrectValidationAccountMocks(1)[0];
+    const accounHastError = await AccountUsecase.login(account);
+
+    expect(is<IValidation.IError[]>(accounHastError)).toEqual(true);
+    console.log(accounHastError);
   });
 
   test("should return valid validation result when creating user account", async () => {
@@ -25,5 +34,21 @@ describe("AccountUsecase test", () => {
       expect(result.success).toBeTruthy();
       expect(result.data).toBeTruthy();
     }
+  });
+
+  test("should return true when the account is successfully created", async () => {
+    const account = createAccountMocks(1)[0];
+
+    const result = await AccountUsecase.register(account);
+
+    expect(result).toBeTruthy();
+  });
+
+  test("should return an IError object when registration violates validation policies", async () => {
+    const account = createAccountMocks(1)[0];
+
+    const result = await AccountUsecase.register(account);
+
+    expect(result).toBeTruthy();
   });
 });
