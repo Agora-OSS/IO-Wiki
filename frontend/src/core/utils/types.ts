@@ -9,3 +9,9 @@ export type ExtractEntityKey<T> = {
 }[keyof T];
 
 export type ExtractEntityProperty<T> = Pick<T, ExtractEntityKey<T>>;
+
+export type WikiApiResponse<T> = {
+  success: boolean;
+  message: string;
+  data: T;
+};
