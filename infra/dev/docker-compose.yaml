@@ -1,5 +1,20 @@
 version: '3.9'
 services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: iowiki-postgres
+    environment:
+      POSTGRES_DB: iowiki
+      POSTGRES_USER: iowiki
+      POSTGRES_PASSWORD: iowiki123
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/base/.docker/init-db:/docker-entrypoint-initdb.d
+    networks:
+      - iowiki-network
   frontend:
     image:
   backend:
