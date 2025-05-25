@@ -141,6 +141,9 @@ importers:
       git-format-staged:
         specifier: ^3.1.1
         version: 3.1.1
+      github-markdown-css:
+        specifier: ^5.8.1
+        version: 5.8.1
       happy-dom:
         specifier: ^17.4.4
         version: 17.4.4
@@ -2344,6 +2347,10 @@ packages:
   git-format-staged@3.1.1:
     resolution: {integrity: sha512-P749fkktaiAchFZKR7bgdvruzhvbcIDr1uRBrS9/Wdimb7wH1Twchz9gOixj8tUaHVMuXY/ckDojfOwV6AxgPA==}
     hasBin: true
+
+  github-markdown-css@5.8.1:
+    resolution: {integrity: sha512-8G+PFvqigBQSWLQjyzgpa2ThD9bo7+kDsriUIidGcRhXgmcaAWUIpCZf8DavJgc+xifjbCG+GvMyWr0XMXmc7g==}
+    engines: {node: '>=10'}
 
   github-slugger@2.0.0:
     resolution: {integrity: sha512-IaOQ9puYtjrkq7Y0Ygl9KDZnrf/aiUJYUpVf89y8kyaxbRG7Y1SrX/jaumrv81vc61+kiMempujsM3Yw7w5qcw==}
@@ -6597,6 +6604,8 @@ snapshots:
       is-stream: 4.0.1
 
   git-format-staged@3.1.1: {}
+
+  github-markdown-css@5.8.1: {}
 
   github-slugger@2.0.0: {}
 
