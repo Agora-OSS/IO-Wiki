@@ -1,3 +1,3 @@
-import Markdown from "@/core/widgets/markdown/markdown.astro";
+import MarkdownViewer from "@/core/widgets/markdown/markdownViewer.astro";
 
-export { Markdown };
+export { MarkdownViewer };

@@ -21,6 +21,7 @@ import { Sidebar } from "@/feature/sidebar/components";
 			localStorage.setItem('theme', isDark ? 'dark' : 'light');
 		});
 		observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+		document.documentElement.setAttribute("data-color-mode", isDark ? 'dark' : 'light');
 	}
 </script>
 
@@ -34,7 +35,7 @@ import { Sidebar } from "@/feature/sidebar/components";
 	</head>
 	<body>
 		<div class="flex gap-4">
-			<Sidebar client:load={true}/>
+			<Sidebar client:only="react"/>
 			<div class="flex-1">
 				<slot />
 			</div>
