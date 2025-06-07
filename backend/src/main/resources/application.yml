@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: base
+  datasource:
+    url: jdbc:postgresql://localhost:5432/iowiki
+    username: local
+    password: local
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+  jpa:
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
