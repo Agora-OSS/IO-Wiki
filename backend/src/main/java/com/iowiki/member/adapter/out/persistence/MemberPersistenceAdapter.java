@@ -16,4 +16,9 @@ public class MemberPersistenceAdapter implements MemberRepositoryPort {
     public void create(Member member) {
         memberRepository.save(memberMapper.toEntity(member));
     }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        return memberRepository.existsByEmail((email));
+    }
 }

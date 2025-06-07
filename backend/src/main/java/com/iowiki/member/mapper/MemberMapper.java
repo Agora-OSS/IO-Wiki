@@ -1,7 +1,9 @@
 package com.iowiki.member.mapper;
 
+import com.iowiki.member.adapter.in.web.dto.MemberExistsDto;
 import com.iowiki.member.adapter.in.web.dto.SignUpDto;
 import com.iowiki.member.adapter.out.persistence.MemberEntity;
+import com.iowiki.member.application.command.MemberExistsCommand;
 import com.iowiki.member.application.command.SignUpCommand;
 import com.iowiki.member.domain.Member;
 import com.iowiki.member.domain.Role;
@@ -15,4 +17,6 @@ public interface MemberMapper {
     MemberEntity toEntity(Member member);
 
     RoleEntity toEntity(Role role);
+
+    MemberExistsCommand toCommand(MemberExistsDto.Request existsRequest);
 }
