@@ -11,13 +11,13 @@ public class Member {
     private UUID uuid;
     private String email;
     private String password;
-    private Role role;
+    private RoleType roleType;
 
     public Member signUpWith(String encodedPassword) {
         return this.toBuilder()
                 .uuid(UUID.randomUUID())
                 .password(encodedPassword)
-                .role(Role.from(RoleType.NML))
+                .roleType(RoleType.NML)
                 .build();
     }
 }

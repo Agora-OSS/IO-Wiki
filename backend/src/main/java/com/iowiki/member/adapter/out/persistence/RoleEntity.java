@@ -22,5 +22,5 @@ public class RoleEntity {
     @Id
     @Enumerated(EnumType.STRING)
     @Column(length = 3, nullable = false)
-    private RoleType roleType;
+    private RoleType type;
 }

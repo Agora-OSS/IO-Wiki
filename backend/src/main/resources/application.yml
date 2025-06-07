@@ -13,3 +13,6 @@ spring:
     hibernate:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+
+jwt:
+  secret: 9BeaebpYnkBmfsx15WasegYm/k0FFXJpoQ5ngoYTzgI=

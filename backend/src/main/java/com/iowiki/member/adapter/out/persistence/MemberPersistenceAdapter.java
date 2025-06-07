@@ -6,6 +6,8 @@ import com.iowiki.member.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 @RequiredArgsConstructor
 public class MemberPersistenceAdapter implements MemberRepositoryPort {
@@ -20,5 +22,10 @@ public class MemberPersistenceAdapter implements MemberRepositoryPort {
     @Override
     public boolean existsByEmail(String email) {
         return memberRepository.existsByEmail((email));
+    }
+
+    @Override
+    public Optional<Member> findByEmail(String email) {
+        return memberRepository.findByEmail(email);
     }
 }

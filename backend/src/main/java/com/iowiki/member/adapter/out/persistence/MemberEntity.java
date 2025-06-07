@@ -31,7 +31,7 @@ public class MemberEntity {
     private UUID uuid;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "role_type")
+    @JoinColumn(name = "role_type", referencedColumnName = "type")
     private RoleEntity role;
 
     @Column(nullable = false, unique = true, length = 320)
