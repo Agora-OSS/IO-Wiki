@@ -1,6 +1,10 @@
 package com.iowiki.common.web;
 
-public record CommonResponse<T>(boolean success, String message, T data) {
+public record CommonResponse<T>(
+        boolean success,
+        String message,
+        T data
+) {
     public static <T> CommonResponse<T> empty() {
         return success(null);
     }
