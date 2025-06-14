@@ -12,7 +12,7 @@ import {
   UserPlus,
   X,
 } from "lucide-react";
-import { type PropsWithChildren, useEffect, useState } from "react";
+import { type PropsWithChildren, useState } from "react";
 
 import { TooltipProvider } from "@/core/widgets/tooltip";
 
@@ -129,6 +129,7 @@ export const Sidebar: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
                   label="로그인"
                   href="/login"
                   collapsed={sidebarCollapsedState && !isMobile}
+                  target="_self"
                 />
                 <NavItem
                   icon={UserPlus}
@@ -190,7 +191,7 @@ export const Sidebar: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
         </div>
       </TooltipProvider>
       {isMobile && (
-        <div className="border-b p-4">
+        <div className="absolute w-full border-b p-4">
           <Button variant="ghost" size="icon" onClick={() => open()}>
             <Menu className="h-6 w-6" />
             <span className="sr-only">Open menu</span>

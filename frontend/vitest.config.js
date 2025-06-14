@@ -7,6 +7,6 @@ export default getViteConfig({
     setupFiles: ["./vitest.setup.ts"],
     root: __dirname,
     include: ["src/**/__tests__/*.{test,spec}.{js,ts,tsx}"],
-    environment: "jsdom",
+    environment: "happy-dom",
   },
 });
