@@ -136,17 +136,12 @@ export const Sidebar: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
                   label="회원가입"
                   href="/register"
                   collapsed={sidebarCollapsedState && !isMobile}
+                  target="_self"
                 />
                 <NavItem
                   icon={BookOpen}
                   label="Documentation"
                   href="/docs"
-                  collapsed={sidebarCollapsedState && !isMobile}
-                />
-                <NavItem
-                  icon={LifeBuoy}
-                  label="Support"
-                  href="/support"
                   collapsed={sidebarCollapsedState && !isMobile}
                 />
               </>

@@ -8,8 +8,8 @@ export const useSidebar = () => {
   return {
     open: () => NavigationUsecase.openSidebar(),
     close: () => NavigationUsecase.closeSidebar(),
-    collapse: () => NavigationUsecase.collapse(),
-    stretch: () => NavigationUsecase.stretch(),
+    collapse: () => NavigationUsecase.collapseSidebar(),
+    stretch: () => NavigationUsecase.stretchSidebar(),
     sidebarOpenState: isOpen,
     sidebarCollapsedState: collapsed,
   };

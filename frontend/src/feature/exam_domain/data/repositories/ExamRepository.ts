@@ -5,8 +5,10 @@ import type { ExamProtocol } from "../protocol";
 
 export const exampleRepository = {
   async getExamList(): Promise<Exam[]> {
+    const exams = await fetchAllExams();
+
     return toEntity<ExamProtocol, Exam>(
-      fetchAllExams(),
+      exams,
       (examProtocol) =>
         Exam.create({
           id: examProtocol.id ?? "77d73d7a-99e6-407f-880b-a6b257ac1485",

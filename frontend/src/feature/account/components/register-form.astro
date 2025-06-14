@@ -1,7 +1,24 @@
 ---
+import { Button } from "@/core/widgets/button";
 import { Input } from "@/core/widgets/input";
 import Logo from "../../../assets/logo/bl_50_50_l.svg";
-import { Button } from "@/core/widgets/button";
+
+const formError = {
+  email: {
+    isValid: true,
+  },
+  password: {
+    isValid: true,
+  },
+  passwordCheck: {
+    isValid: true,
+  },
+};
+const request = Astro.request;
+
+if (request.method === "POST") {
+  // TODO : Validate and persistant
+}
 ---
 
 <div class="flex flex-col items-center justify-center min-h-screen px-4">
@@ -12,7 +29,7 @@ import { Button } from "@/core/widgets/button";
     </div>
   </div>
 
-  <!-- 로그인 폼 -->
+  {/* 로그인 폼 */}
   <form method="post" class="mt-8 space-y-6 w-1/2">
     <div class="space-y-6">
       <div>
@@ -35,24 +52,39 @@ import { Button } from "@/core/widgets/button";
           비밀번호
         </label>
         <Input
-        client:load
+          client:load   
           id="password"
           name="password"
           type="password"
           placeholder="••••••••"
           required
+          minLength={8}
+          className="mt-1 block w-full border dark:border-gray-300 rounded-md"
+        />
+      </div>
+
+      <div>
+        <label for="password-check" class="block text-sm font-medium">
+          비밀번호 확인
+        </label>
+        <Input
+          id="password-check"
+          name="password-check"
+          type="password"
+          placeholder="••••••••"
+          required
+          minLength={8}
           className="mt-1 block w-full border dark:border-gray-300 rounded-md"
         />
       </div>
     </div>
 
-    <div class="text-sm text-right">
-      <a
-        href="/forgot-password"
-        class="dark:text-gray-200 text-gray-800 hover:underline"
+    <div class="text-sm">
+      <span
+        class="dark:text-blue-400 text-blue-800"
       >
-        비밀번호를 잊으셨나요?
-      </a>
+        비밀번호는 영소문자를 포함한 8자리 이상이어야합니다.
+    </span>
     </div>
 
     <div>
@@ -60,7 +92,7 @@ import { Button } from "@/core/widgets/button";
         type="submit"
         className="w-full bg-black text-white py-2 px-4 rounded-md cursor-pointer"
       >
-        로그인
+        회원가입
       </Button>
     </div>
   </form>
@@ -69,9 +101,9 @@ import { Button } from "@/core/widgets/button";
   <div class="mt-6 text-center text-sm">
     <p class="dark:text-gray-200 text-gray-800">관리자 승인 후 로그인이 가능합니다.</p>
     <p class="mt-4">
-      계정이 없으신가요? {" "}
-      <a href="/register" class="underline">
-        회원가입
+      계정이 이미있으신가요? {" "}
+      <a href="/login" class="underline">
+        로그인
       </a>
     </p>
   </div>
