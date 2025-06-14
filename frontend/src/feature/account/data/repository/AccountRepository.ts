@@ -1,5 +1,5 @@
 import type { AccountType } from "../../domain/entities";
-import { callLogin, callRegist } from "../datasource";
+import { callLogin, callRegist, callEmailExsist } from "../datasource";
 
 export const doLogin = async (account: AccountType) => {
   return await callLogin(account.email, account.password || "");
@@ -7,4 +7,8 @@ export const doLogin = async (account: AccountType) => {
 
 export const createAccount = async (account: AccountType) => {
   return await callRegist(account);
+};
+
+export const checkEmailExsist = async (email: string) => {
+  return await callEmailExsist(email);
 };

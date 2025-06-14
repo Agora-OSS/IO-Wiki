@@ -1,6 +1,7 @@
 import {
   callLogin,
   callRegist,
+  callEmailExsist,
 } from "@/feature/account/data/datasource/AccountApi";
 
-export { callLogin, callRegist };
+export { callLogin, callRegist, callEmailExsist };

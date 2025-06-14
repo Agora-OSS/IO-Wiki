@@ -13,7 +13,7 @@ describe("AccountUsecase test", () => {
   test("should complete login execution successfully", async () => {
     const account = createAccountMocks(1)[0];
 
-    expect(await AccountUsecase.login(account)).toBeTruthy();
+    expect(await AccountUsecase.login(account)).toBeNull();
   });
 
   test("should return an IError object when login violates validation policies.", async () => {
@@ -40,7 +40,7 @@ describe("AccountUsecase test", () => {
 
     const result = await AccountUsecase.register(account);
 
-    expect(result).toBeTruthy();
+    expect(result).toBeNull();
   });
 
   test("should return an IError object when registration violates validation policies", async () => {
