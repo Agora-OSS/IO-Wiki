@@ -3,6 +3,7 @@ import { fx } from "@fxts/core";
 import { random } from "typia";
 import { authenticationHandlers } from "./authentication";
 import { memberHandlers } from "./member";
+import { adminHandlers } from "./admin";
 
 export const createAccountMocks = (count: number) =>
   fx(Array(count).fill(0))
@@ -18,4 +19,8 @@ export const createEncorrectValidationAccountMocks = (count: number) =>
     })
     .toArray();
 
-export const accountHandlers = [...authenticationHandlers, ...memberHandlers];
+export const accountHandlers = [
+  ...authenticationHandlers,
+  ...memberHandlers,
+  ...adminHandlers,
+];
