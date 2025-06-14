@@ -3,7 +3,6 @@ import {
   createAccountMocks,
   createEncorrectValidationAccountMocks,
 } from "@/mock/account";
-import { flat } from "@fxts/core";
 import { describe, expect, test } from "vitest";
 import { AccountUsecase } from "../account-usecase";
 import { is, type IValidation } from "typia";
@@ -45,10 +44,10 @@ describe("AccountUsecase test", () => {
   });
 
   test("should return an IError object when registration violates validation policies", async () => {
-    const account = createAccountMocks(1)[0];
+    const account = createEncorrectValidationAccountMocks(1)[0];
 
     const result = await AccountUsecase.register(account);
 
-    expect(result).toBeTruthy();
+    expect(is<IValidation.IError[]>(result)).toEqual(true);
   });
 });
