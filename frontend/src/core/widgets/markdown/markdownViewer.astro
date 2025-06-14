@@ -1,0 +1,13 @@
+---
+import { createMarkdownProcessor } from "@astrojs/markdown-remark";
+import MarkdownLayout from "@/core/layouts/MarkdownLayout.astro";
+
+const processor = await createMarkdownProcessor();
+const { content } = Astro.props;
+const markdownHtml = await processor.render(content);
+---
+<Fragment>
+  <MarkdownLayout>
+    <div set:html={markdownHtml.code} class="w-full"></div>
+  </MarkdownLayout>
+</Fragment>
