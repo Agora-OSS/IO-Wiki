@@ -4,7 +4,7 @@ import {
   createEncorrectValidationAccountMocks,
 } from "@/mock/account";
 import { describe, expect, test } from "vitest";
-import { AccountUsecase } from "../account-usecase";
+import { AccountUsecase } from "../AccountUsecase";
 import { is, type IValidation } from "typia";
 
 describe("AccountUsecase test", () => {
