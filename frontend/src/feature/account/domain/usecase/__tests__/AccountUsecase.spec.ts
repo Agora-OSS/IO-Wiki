@@ -50,4 +50,24 @@ describe("AccountUsecase test", () => {
 
     expect(is<IValidation.IError[]>(result)).toEqual(true);
   });
+
+  test("should return true when email exists", async () => {
+    const account = createAccountMocks(1)[0];
+
+    const result = await AccountUsecase.checkEmailExsist(account.email);
+    expect(result).toBeTruthy();
+  });
+
+  test("should return false when email does not exist", async () => {
+    const result = await AccountUsecase.checkEmailExsist("nonexistent@example");
+
+    expect(is<IValidation.IError[]>(result)).toEqual(true);
+  });
+
+  test("should return user details when fetching my details", async () => {
+    const result = await AccountUsecase.getMyDetails();
+
+    expect(result).toBeDefined();
+    expect(result.email).toBe("test@example.com");
+  });
 });

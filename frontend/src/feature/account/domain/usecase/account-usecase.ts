@@ -1,7 +1,12 @@
 import { validateEntity } from "@/core/utils/validator";
 import { Account, type AccountType } from "@/feature/account/domain/entities";
-import { flatMap, fx, map, pipe, take, toArray } from "@fxts/core";
-import { createAccount, doLogin } from "@/feature/account/data/repository";
+import { flatMap, map, pipe, take, toArray } from "@fxts/core";
+import {
+  createAccount,
+  doLogin,
+  checkEmailExsist,
+  getMyDetails,
+} from "@/feature/account/data/repository";
 
 class AccountUsecase {
   async login(loginAccount: AccountType) {
@@ -40,6 +45,32 @@ class AccountUsecase {
     }
 
     return await createAccount(validResult.data);
+  }
+
+  async checkEmailExsist(email: string) {
+    const validResult = pipe(
+      [email],
+      map((email) => Account.create({ email, password: "" })),
+      flatMap((account) => this.validateAccountInfo(account)),
+      take(1),
+      toArray,
+    )[0];
+
+    if (!validResult.success) {
+      return validResult.errors;
+    }
+
+    return await checkEmailExsist(validResult.data.email);
+  }
+  async getMyDetails() {
+    const myDetails = await getMyDetails();
+
+    return pipe(
+      [myDetails],
+      map(({ email }) => Account.create({ email, password: "" })),
+      take(1),
+      toArray,
+    )[0];
   }
 }
 
