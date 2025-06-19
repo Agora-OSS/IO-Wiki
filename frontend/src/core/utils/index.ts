@@ -1,3 +1,3 @@
 import { cn } from "@/core/utils/style";
-
-export { cn };
+import axios from "@/core/utils/axios";
+export { cn, axios };

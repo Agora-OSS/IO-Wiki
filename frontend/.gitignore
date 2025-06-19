@@ -29,3 +29,6 @@ coverage/
 /blob-report/
 /playwright/.cache/
 tests-out
+
+# local ssl cert
+.certs/

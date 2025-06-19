@@ -1,5 +1,5 @@
 import type { WikiApiResponse } from "@/core/utils/types";
-import axios from "axios";
+import { axios } from "@/core/utils";
 import type { AccountType } from "@/feature/account/domain/entities";
 
 export const callLogin = async (email: string, password: string) => {

@@ -28,12 +28,13 @@ export class Account {
     return typia.createValidateEquals<Account>();
   }
 
-  getAccountAtom() {
+  static getAccountAtom() {
     return accountAtom;
   }
 
   persistent() {
     accountAtom.set({ email: this.email, password: this.password });
+    return this;
   }
 }
 
@@ -41,7 +42,7 @@ const accountAtom = persistentAtom<AccountType>(
   "account",
   Account.create({ email: "", password: "" }),
   {
-    encode: typia.json.stringify,
+    encode: typia.json.stringify<AccountType>,
     decode: (encoded) =>
       Account.create(typia.json.isParse<AccountType>(encoded)),
   },

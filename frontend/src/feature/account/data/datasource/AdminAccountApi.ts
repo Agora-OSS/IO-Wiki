@@ -1,5 +1,5 @@
 import type { WikiApiResponse } from "@/core/utils/types";
-import axios from "axios";
+import { axios } from "@/core/utils";
 
 type InitPasswordResponse = {
   newPassword: string;
