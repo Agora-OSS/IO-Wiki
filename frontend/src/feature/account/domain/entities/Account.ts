@@ -12,7 +12,7 @@ export class Account {
 
   private constructor(
     email: string & Format<"email">,
-    password: string & tags.Pattern<"(?=.*[A-Za-z])(?=.*d)[A-Za-zd]{8,}$">,
+    password: string & tags.Pattern<"^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$">,
   ) {
     this.email = email;
     this.password = password;
@@ -42,7 +42,7 @@ const accountAtom = persistentAtom<AccountType>(
   "account",
   Account.create({ email: "", password: "" }),
   {
-    encode: typia.json.stringify<AccountType>,
+    encode: JSON.stringify,
     decode: (encoded) =>
       Account.create(typia.json.isParse<AccountType>(encoded)),
   },

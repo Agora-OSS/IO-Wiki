@@ -5,18 +5,7 @@ import { AccountRepository } from "@/feature/account/data/repository";
 
 class AccountUsecase {
   async login(loginAccount: AccountType) {
-    const validResult = pipe(
-      [Account.create({ ...loginAccount })],
-      flatMap((account) => this.validateAccountInfo(account)),
-      take(1),
-      toArray,
-    )[0];
-
-    if (!validResult.success) {
-      return validResult.errors;
-    }
-
-    return await AccountRepository.doLogin(validResult.data);
+    return await AccountRepository.doLogin(loginAccount);
   }
 
   validateAccountInfo(accountData: AccountType) {
@@ -58,7 +47,14 @@ class AccountUsecase {
     return await AccountRepository.checkEmailExsist(validResult.data.email);
   }
   async getMyDetails() {
-    const myDetails = await AccountRepository.getMyDetails();
+    if (Account.getAccountAtom().get().email !== "") {
+      return Account.getAccountAtom().get();
+    }
+    // real implementation
+    // const myDetails = await AccountRepository.getMyDetails();
+
+    // mock data
+    const myDetails = { email: "test@example.com" };
 
     return pipe(
       [myDetails],

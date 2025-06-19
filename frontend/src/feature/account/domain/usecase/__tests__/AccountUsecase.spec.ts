@@ -16,14 +16,6 @@ describe("AccountUsecase test", () => {
     expect(await AccountUsecase.login(account)).toBeNull();
   });
 
-  test("should return an IError object when login violates validation policies.", async () => {
-    const account = createEncorrectValidationAccountMocks(1)[0];
-    const accounHastError = await AccountUsecase.login(account);
-
-    expect(is<IValidation.IError[]>(accounHastError)).toEqual(true);
-    console.log(accounHastError);
-  });
-
   test("should return valid validation result when creating user account", async () => {
     const account = createAccountMocks(1)[0];
 
