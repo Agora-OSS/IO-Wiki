@@ -13,6 +13,7 @@ import com.iowiki.member.application.command.SignUpCommand;
 import com.iowiki.member.domain.Member;
 import com.iowiki.member.domain.Role;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface MemberMapper {
@@ -29,5 +30,7 @@ public interface MemberMapper {
     default MemberPageCommand toCommand(MemberPageDto.Request dto) {
         return new MemberPageCommand(dto);
     }
+
+    @Mapping(target = "roleType", source = "role.type")
     Member toDomain(MemberEntity memberEntity);
 }

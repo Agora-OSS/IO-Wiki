@@ -31,7 +31,7 @@ public class MemberPersistenceAdapter implements MemberRepositoryPort {
 
     @Override
     public Optional<Member> findByEmail(String email) {
-        return memberRepository.findByEmail(email);
+        return memberRepository.findByEmail(email).map(memberMapper::toDomain);
     }
 
     @Override
