@@ -40,9 +40,8 @@ public class MemberEntity {
     @Column(nullable = false)
     private String password;
 
-    @Builder.Default
     @Enumerated(EnumType.STRING)
-    private ApprovalType approvalType = ApprovalType.PEN;
+    private ApprovalType approvalType;
 
     private LocalDateTime approvalAt;
 

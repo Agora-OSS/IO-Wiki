@@ -8,7 +8,7 @@ import lombok.Builder;
 public interface MemberPageDto {
     @Builder(toBuilder = true)
     record Request(
-        @Min(1) int page,
+        @Min(0) int page,
         @Min(1) @Max(100) int size
     ) {}
 

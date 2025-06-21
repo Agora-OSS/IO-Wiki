@@ -19,6 +19,7 @@ public class Member {
                 .uuid(UUID.randomUUID())
                 .password(encodedPassword)
                 .roleType(RoleType.NML)
+                .approvalType(ApprovalType.PEN)
                 .build();
     }
 
