@@ -35,6 +35,11 @@ public class MemberPersistenceAdapter implements MemberRepositoryPort {
     }
 
     @Override
+    public void update(Member member) {
+        memberRepository.save(memberMapper.toEntity(member));
+    }
+
+    @Override
     public Page<Member> findBy(Pageable pageable) {
         QMemberEntity memberEntity = QMemberEntity.memberEntity;
 

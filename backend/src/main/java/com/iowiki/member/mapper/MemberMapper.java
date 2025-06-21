@@ -1,11 +1,13 @@
 package com.iowiki.member.mapper;
 
+import com.iowiki.member.adapter.in.web.dto.InitPasswordDto;
 import com.iowiki.member.adapter.in.web.dto.LoginDto;
 import com.iowiki.member.adapter.in.web.dto.MemberExistsDto;
 import com.iowiki.member.adapter.in.web.dto.MemberPageDto;
 import com.iowiki.member.adapter.in.web.dto.SignUpDto;
 import com.iowiki.member.adapter.out.persistence.MemberEntity;
 import com.iowiki.member.adapter.out.persistence.RoleEntity;
+import com.iowiki.member.application.command.InitPasswordCommand;
 import com.iowiki.member.application.command.LoginCommand;
 import com.iowiki.member.application.command.MemberExistsCommand;
 import com.iowiki.member.application.command.MemberPageCommand;
@@ -35,4 +37,6 @@ public interface MemberMapper {
 
     @Mapping(target = "roleType", source = "role.type")
     Member toDomain(MemberEntity memberEntity);
+
+    InitPasswordCommand toCommand(InitPasswordDto.Request initPasswordRequest);
 }

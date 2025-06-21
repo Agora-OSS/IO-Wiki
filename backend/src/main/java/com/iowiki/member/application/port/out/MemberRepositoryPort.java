@@ -9,4 +9,5 @@ public interface MemberRepositoryPort extends MemberRepositoryCustom {
     void create(Member member);
     boolean existsByEmail(String email);
     Optional<Member> findByEmail(String email);
+    void update(Member member);
 }

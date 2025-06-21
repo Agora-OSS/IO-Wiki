@@ -1,13 +1,15 @@
 package com.iowiki.member.adapter.in.web.dto;
 
 import com.iowiki.member.domain.Member;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.Builder;
 
 public interface MemberPageDto {
     @Builder(toBuilder = true)
     record Request(
-        int page,
-        int size
+        @Min(1) int page,
+        @Min(1) @Max(100) int size
     ) {}
 
     @Builder(toBuilder = true)

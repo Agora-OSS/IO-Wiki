@@ -20,4 +20,8 @@ public class Member {
                 .roleType(RoleType.NML)
                 .build();
     }
+
+    public void updatePassword(String encodedPassword) {
+        this.password = encodedPassword;
+    }
 }
