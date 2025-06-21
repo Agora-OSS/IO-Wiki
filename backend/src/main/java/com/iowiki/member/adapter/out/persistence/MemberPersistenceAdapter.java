@@ -11,6 +11,7 @@ import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -37,6 +38,11 @@ public class MemberPersistenceAdapter implements MemberRepositoryPort {
     @Override
     public void update(Member member) {
         memberRepository.save(memberMapper.toEntity(member));
+    }
+
+    @Override
+    public void deleteById(UUID uuid) {
+        memberRepository.deleteById(uuid);
     }
 
     @Override

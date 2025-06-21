@@ -12,6 +12,7 @@ public class Member {
     private String email;
     private String password;
     private RoleType roleType;
+    private ApprovalType approvalType;
 
     public Member signUpWith(String encodedPassword) {
         return this.toBuilder()
@@ -23,5 +24,13 @@ public class Member {
 
     public void updatePassword(String encodedPassword) {
         this.password = encodedPassword;
+    }
+
+    public void approve() {
+        approvalType = ApprovalType.APP;
+    }
+
+    public boolean isPending() {
+        return approvalType == ApprovalType.PEN;
     }
 }

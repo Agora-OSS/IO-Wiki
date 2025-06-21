@@ -35,7 +35,8 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(exception = {
-            InvalidPasswordException.class
+            InvalidPasswordException.class,
+            IllegalArgumentException.class
     })
     public ResponseEntity<CommonResponse<Void>> handleBadRequestException(Exception e) {
         return ResponseEntity
