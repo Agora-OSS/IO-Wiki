@@ -4,6 +4,7 @@ import com.iowiki.common.utils.WebUtils;
 import com.iowiki.common.web.CommonResponse;
 import com.iowiki.member.adapter.in.web.dto.LoginDto;
 import com.iowiki.member.adapter.in.web.dto.MemberExistsDto;
+import com.iowiki.member.adapter.in.web.dto.MemberSelfViewDto;
 import com.iowiki.member.adapter.in.web.dto.SignUpDto;
 import com.iowiki.member.application.port.in.CheckMemberExistsUsecase;
 import com.iowiki.member.application.port.in.LoginUsecase;
@@ -15,6 +16,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,11 +57,18 @@ public class MemberController {
                         .build()));
     }
 
+    @GetMapping("/me")
+    public ResponseEntity<CommonResponse<MemberSelfViewDto.Response>> getSelf(@AuthenticationPrincipal User userDetails) {
+        // Details 미포함 정보가 필요하다면 조회 로직 추가
+        return ResponseEntity.ok(CommonResponse.success(
+                MemberSelfViewDto.Response.builder().email(userDetails.getUsername()).build()));
+    }
+
     private ResponseCookie createAccessTokenCookie(String accessToken) {
         return WebUtils.createCookie(
                 WebUtils.ACCESS_TOKEN_COOKIE_NAME,
                 accessToken,
-                1000 * 60 * 60,
+                1000L * 60 * 60,
                 true,
                 false,
                 "/",

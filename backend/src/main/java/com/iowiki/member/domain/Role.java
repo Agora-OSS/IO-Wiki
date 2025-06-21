@@ -1,11 +1,10 @@
 package com.iowiki.member.domain;
 
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-@Builder(toBuilder = true, access = AccessLevel.PRIVATE)
+@Builder(toBuilder = true)
 public class Role {
     private final RoleType roleType;
 

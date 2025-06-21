@@ -15,10 +15,12 @@ import com.iowiki.member.domain.Role;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {RoleMapper.class})
 public interface MemberMapper {
     SignUpCommand toCommand(SignUpDto.Request signUpRequest);
     Member toDomain(SignUpCommand command);
+
+    @Mapping(target = "role", source = "roleType")
     MemberEntity toEntity(Member member);
 
     RoleEntity toEntity(Role role);
