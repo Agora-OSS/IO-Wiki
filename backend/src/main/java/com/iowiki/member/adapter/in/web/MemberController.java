@@ -39,7 +39,7 @@ public class MemberController {
 
     @PostMapping("/exists")
     public ResponseEntity<CommonResponse<MemberExistsDto.Response>> exists(@Valid @RequestBody MemberExistsDto.Request existsRequest) {
-        return ResponseEntity.ok(CommonResponse.success(checkMemberExistsUsecase.exists(memberMapper.toCommand(existsRequest))));
+        return ResponseEntity.ok(CommonResponse.success(MemberExistsDto.Response.from(checkMemberExistsUsecase.exists(memberMapper.toCommand(existsRequest)))));
     }
 
     @PostMapping("/login")

@@ -1,9 +1,9 @@
 package com.iowiki.common.web;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.function.Function;
 
 public record PageResponse<T>(
         List<T> content,
@@ -14,7 +14,7 @@ public record PageResponse<T>(
         boolean hasNext,
         boolean hasPrevious
 ) {
-    public static <T> PageResponse<T> of(Page<T> page) {
+    public static <T> PageResponse<T> from(Page<T> page) {
         return new PageResponse<>(
                 page.getContent(),
                 page.getNumber(),
@@ -26,19 +26,20 @@ public record PageResponse<T>(
         );
     }
 
-    public static <T> PageResponse<T> of(List<T> content, Pageable pageable, long total) {
-        int totalPages = (int) Math.ceil((double) total / pageable.getPageSize());
-        boolean hasNext = pageable.getPageNumber() + 1 < totalPages;
-        boolean hasPrevious = pageable.getPageNumber() > 0;
+    public static <T, U> PageResponse<U> of(Page<T> page, Function<T, U> mapper) {
+        List<U> content = page.getContent()
+                .stream()
+                .map(mapper)
+                .toList();
 
         return new PageResponse<>(
                 content,
-                pageable.getPageNumber(),
-                pageable.getPageSize(),
-                total,
-                totalPages,
-                hasNext,
-                hasPrevious
+                page.getNumber(),
+                page.getSize(),
+                page.getTotalElements(),
+                page.getTotalPages(),
+                page.hasNext(),
+                page.hasPrevious()
         );
     }
 }
