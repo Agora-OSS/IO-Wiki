@@ -10,6 +10,7 @@ import com.iowiki.member.application.port.in.CheckMemberExistsUsecase;
 import com.iowiki.member.application.port.in.LoginUsecase;
 import com.iowiki.member.application.port.in.SignUpUsecase;
 import com.iowiki.member.mapper.MemberMapper;
+import com.iowiki.security.JwtTokenProvider;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -57,6 +58,14 @@ public class MemberController {
                         .build()));
     }
 
+    @PostMapping("/logout")
+    public ResponseEntity<CommonResponse<Void>> logout() {
+        return ResponseEntity.ok()
+                .header(HttpHeaders.SET_COOKIE,
+                        WebUtils.removeCookieBy(JwtTokenProvider.ACCESS_TOKEN_COOKIE_NAME, WebUtils.COOKIE_ROOT_PATH).toString())
+                .body(CommonResponse.empty());
+    }
+
     @GetMapping("/me")
     public ResponseEntity<CommonResponse<MemberSelfViewDto.Response>> getSelf(@AuthenticationPrincipal User userDetails) {
         // Details 미포함 정보가 필요하다면 조회 로직 추가
@@ -66,12 +75,12 @@ public class MemberController {
 
     private ResponseCookie createAccessTokenCookie(String accessToken) {
         return WebUtils.createCookie(
-                WebUtils.ACCESS_TOKEN_COOKIE_NAME,
+                JwtTokenProvider.ACCESS_TOKEN_COOKIE_NAME,
                 accessToken,
-                1000L * 60 * 60,
+                JwtTokenProvider.ACCESS_TOKEN_EXPIRATION,
                 true,
                 false,
-                "/",
+                WebUtils.COOKIE_ROOT_PATH,
                 WebUtils.COOKIE_SAME_SITE
         );
     }

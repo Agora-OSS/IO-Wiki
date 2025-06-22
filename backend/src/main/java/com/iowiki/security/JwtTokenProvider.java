@@ -15,11 +15,12 @@ public class JwtTokenProvider {
     @Value("${jwt.secret}")
     private String secretKey;
 
-    private static final long EXPIRATION = 1000 * 60 * 60;
+    public static final String ACCESS_TOKEN_COOKIE_NAME = "accessToken";
+    public static final long ACCESS_TOKEN_EXPIRATION = 1000L * 60 * 60;
 
     public String generateToken(String username) {
         Date now = new Date();
-        Date expiry = new Date(now.getTime() + EXPIRATION);
+        Date expiry = new Date(now.getTime() + ACCESS_TOKEN_EXPIRATION);
 
         return Jwts.builder()
                 .setSubject(username)

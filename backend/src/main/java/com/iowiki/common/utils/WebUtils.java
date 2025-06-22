@@ -7,8 +7,8 @@ import java.time.Duration;
 
 @UtilityClass
 public class WebUtils {
-    public static final String ACCESS_TOKEN_COOKIE_NAME = "accessToken";
     public static final String COOKIE_SAME_SITE = "Strict";
+    public static final String COOKIE_ROOT_PATH = "/";
 
     public static ResponseCookie createCookie(String name,
                                               String value,
@@ -28,5 +28,12 @@ public class WebUtils {
         }
 
         return builder.build();
+    }
+
+    public static ResponseCookie removeCookieBy(String name, String path) {
+        return ResponseCookie.from(name)
+                .path(path)
+                .maxAge(0)
+                .build();
     }
 }
