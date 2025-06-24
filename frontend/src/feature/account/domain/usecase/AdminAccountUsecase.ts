@@ -1,6 +1,6 @@
+import { AdminAccountRepository } from "@/feature/account/data/repository";
 import { Account, type AccountType } from "@/feature/account/domain/entities";
 import { flatMap, map, pipe, take, toArray } from "@fxts/core";
-import { AdminAccountRepository } from "@/feature/account/data/repository";
 
 class AdminAccountUsecase {
   async initializeAdminAccount(email: string): Promise<void> {

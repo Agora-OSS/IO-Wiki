@@ -3,9 +3,9 @@ import {
   createAccountMocks,
   createEncorrectValidationAccountMocks,
 } from "@/mock/account";
+import { type IValidation, is } from "typia";
 import { describe, expect, test } from "vitest";
 import { AccountUsecase } from "../AccountUsecase";
-import { is, type IValidation } from "typia";
 
 describe("AccountUsecase test", () => {
   beforeEach(() => {});
@@ -46,12 +46,18 @@ describe("AccountUsecase test", () => {
   test("should return true when email exists", async () => {
     const account = createAccountMocks(1)[0];
 
-    const result = await AccountUsecase.checkEmailExsist(account.email);
+    const result = await AccountUsecase.checkEmailExsist({
+      email: account.email,
+      password: "password123",
+    });
     expect(result).toBeTruthy();
   });
 
   test("should return false when email does not exist", async () => {
-    const result = await AccountUsecase.checkEmailExsist("nonexistent@example");
+    const result = await AccountUsecase.checkEmailExsist({
+      email: "nonexistent@example",
+      password: "password123",
+    });
 
     expect(is<IValidation.IError[]>(result)).toEqual(true);
   });

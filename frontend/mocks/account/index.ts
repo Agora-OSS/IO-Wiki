@@ -1,9 +1,9 @@
 import type { Account } from "@/feature/account/domain/entities";
 import { fx } from "@fxts/core";
 import { random } from "typia";
+import { adminHandlers } from "./admin";
 import { authenticationHandlers } from "./authentication";
 import { memberHandlers } from "./member";
-import { adminHandlers } from "./admin";
 
 export const createAccountMocks = (count: number) =>
   fx(Array(count).fill(0))

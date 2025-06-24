@@ -1,7 +1,7 @@
 import { validateEntity } from "@/core/utils/validator";
+import { AccountRepository } from "@/feature/account/data/repository";
 import { Account, type AccountType } from "@/feature/account/domain/entities";
 import { flatMap, map, pipe, take, toArray } from "@fxts/core";
-import { AccountRepository } from "@/feature/account/data/repository";
 
 class AccountUsecase {
   async login(loginAccount: AccountType) {
@@ -31,10 +31,9 @@ class AccountUsecase {
     return await AccountRepository.createAccount(validResult.data);
   }
 
-  async checkEmailExsist(email: string) {
+  async checkEmailExsist({ email, password }: AccountType) {
     const validResult = pipe(
-      [email],
-      map((email) => Account.create({ email, password: "" })),
+      [Account.create({ email, password })],
       flatMap((account) => this.validateAccountInfo(account)),
       take(1),
       toArray,

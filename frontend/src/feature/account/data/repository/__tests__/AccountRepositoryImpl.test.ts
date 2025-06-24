@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { createAccount, doLogin, checkEmailExsist } from "../AccountRepository";
+import { checkEmailExsist, createAccount, doLogin } from "../AccountRepository";
 
 describe("AccountRepositoryImpl Test", () => {
   test("should return true when login is successful", async () => {
