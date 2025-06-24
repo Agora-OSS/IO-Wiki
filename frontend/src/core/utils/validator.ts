@@ -1,4 +1,15 @@
-import { filter, map, pipe, toArray, toAsync } from "@fxts/core";
+import {
+  every,
+  filter,
+  flat,
+  forEach,
+  isNull,
+  map,
+  pipe,
+  take,
+  toArray,
+} from "@fxts/core";
+import { toast } from "sonner";
 import type { IValidation } from "typia";
 import typia from "typia";
 
@@ -29,5 +40,33 @@ export function validateEntity<T, D>(
     map(mapToEntity),
     map((entity) => validator(entity)),
     toArray,
+  );
+}
+
+export function validateDisplayErrorThenHasError(
+  validateResults: IValidation[],
+) {
+  const errors = pipe(
+    validateResults,
+    take(1),
+    map((result) => (!result.success ? result.errors : null)),
+    filter((error) => !isNull(error)),
+    flat,
+    toArray,
+  );
+
+  if (errors.length) {
+    displayErrors(errors);
+
+    return true;
+  }
+
+  return false;
+}
+
+export function displayErrors(errors: IValidation.IError[]) {
+  pipe(
+    errors,
+    forEach((error) => toast.error(error.expected)),
   );
 }
