@@ -1,8 +1,8 @@
 ---
-import { AccountUsecase } from "@/feature/account/domain/usecase/AccountUsecase";
 import DefaultLogo from "@/assets/logo/i_200_200_d.svg";
-import { Input } from "@/core/widgets/input";
 import { Button } from "@/core/widgets/button";
+import { Input } from "@/core/widgets/input";
+import { AccountUsecase } from "@/feature/account/domain/usecase/AccountUsecase";
 
 const user = await AccountUsecase.getMyDetails();
 ---

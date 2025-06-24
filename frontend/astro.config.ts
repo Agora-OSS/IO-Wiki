@@ -4,8 +4,8 @@ import vue from "@astrojs/vue";
 import UnpluginTypia from "@ryoppippi/unplugin-typia/vite";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
-import checker from "vite-plugin-checker";
 import astrobook from "astrobook";
+import checker from "vite-plugin-checker";
 import devtoolsJson from "vite-plugin-devtools-json";
 import mkcert from "vite-plugin-mkcert";
 
