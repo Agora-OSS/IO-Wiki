@@ -5,6 +5,7 @@ import UnpluginTypia from "@ryoppippi/unplugin-typia/vite";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 import checker from "vite-plugin-checker";
+import astrobook from "astrobook";
 import devtoolsJson from "vite-plugin-devtools-json";
 import mkcert from "vite-plugin-mkcert";
 
@@ -13,7 +14,15 @@ export default defineConfig({
   site: "https://iowiki.com",
   base: "/",
   output: "static",
-  integrations: [react(), vue()],
+  integrations: [
+    react(),
+    vue(),
+    astrobook({
+      directory: "src",
+      head: "src/core/layouts/Layout.astro",
+      subpath: "/docs/components",
+    }),
+  ],
   vite: {
     server: {
       https: {
