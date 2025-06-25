@@ -1,13 +1,10 @@
 import { axios } from "@/core/utils";
 import type { WikiApiResponse } from "@/core/utils/types";
-
-type InitPasswordResponse = {
-  newPassword: string;
-};
+import type { InitPasswordProtocol } from "@/feature/account/data/protocol";
 
 export const callInitPassword = async (email: string) => {
   const { data: responseBody } = await axios.post<
-    WikiApiResponse<InitPasswordResponse>
+    WikiApiResponse<InitPasswordProtocol>
   >("/admin-api/v1/members/init-password", { email });
 
   return responseBody.data.newPassword;

@@ -11,7 +11,11 @@ const axios = Axios.create({
 
 axios.interceptors.response.use(
   (response) => {
-    return response;
+    if (response.data.success) {
+      return response;
+    }
+
+    return Promise.reject(toast.error(response.data.message));
   },
   (error) => {
     // Handle errors globally
