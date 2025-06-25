@@ -6,7 +6,6 @@ import {
   BookOpen,
   Command,
   Home,
-  LifeBuoy,
   LogIn,
   Menu,
   UserPlus,
@@ -111,14 +110,6 @@ export const Sidebar: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
           </div>
           <ScrollArea className="flex-1 py-2">
             <nav className="grid gap-1 px-2">
-              <NavItem
-                icon={Home}
-                label="Home"
-                href="/"
-                collapsed={sidebarCollapsedState && !isMobile}
-                target="_self"
-              />
-
               {/* TODO : Implement Authentication Logic
               {isAuthenticated ? (
                 children

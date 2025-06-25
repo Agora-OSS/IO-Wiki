@@ -1,11 +1,11 @@
 ---
 import Layout from "@/core/layouts/Layout.astro";
-import ExampleWidget from "@/feature/exam_domain/components/Example.astro";
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import { Main } from "@/feature/main/components";
 ---
 
 <Layout>
-	<ExampleWidget/>
+	<div class="p-6">
+		<Main client:only="react"></Main>
+	</div>
+</main>
 </Layout>
