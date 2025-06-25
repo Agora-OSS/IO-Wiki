@@ -45,22 +45,24 @@ class AccountUsecase {
 
     return await AccountRepository.checkEmailExsist(validResult.data.email);
   }
-  async getMyDetails() {
+  async getMyDetails(): Promise<AccountType> {
     if (Account.getAccountAtom().get().email !== "") {
-      return Account.getAccountAtom().get();
+      return Promise.resolve(Account.getAccountAtom().get());
     }
     // real implementation
-    // const myDetails = await AccountRepository.getMyDetails();
+    const myDetails = await AccountRepository.getMyDetails();
 
     // mock data
-    const myDetails = { email: "test@example.com" };
+    // const myDetails = { email: "test@example.com" };
 
-    return pipe(
+    const account = pipe(
       [myDetails],
       map(({ email }) => Account.create({ email, password: "" })),
       take(1),
       toArray,
     )[0];
+
+    return account.persistent();
   }
 }
 

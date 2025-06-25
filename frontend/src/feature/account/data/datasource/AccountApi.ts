@@ -32,12 +32,10 @@ export const callEmailExsist = async (email: string) => {
 };
 
 export const callGetMyDetails = async () => {
-  const { data: responseBody } = await axios.get<
-    WikiApiResponse<AccountDetailsProtocol>
-  >("/api/v1/members/me", {
-    // TODO HTTP only cookies를 사용할 경우, 필요없을 수 있습니다.
-    // headers : {Authorization: `Bearer ${myToken}`}
-  });
+  const { data: responseBody } =
+    await axios.get<WikiApiResponse<AccountDetailsProtocol>>(
+      "/api/v1/members/me",
+    );
 
   return responseBody.data;
 };

@@ -2,9 +2,6 @@
 import DefaultLogo from "@/assets/logo/i_200_200_d.svg";
 import { Button } from "@/core/widgets/button";
 import { Input } from "@/core/widgets/input";
-import { AccountUsecase } from "@/feature/account/domain/usecase/AccountUsecase";
-
-const user = await AccountUsecase.getMyDetails();
 ---
 <Fragment>
   <main class="flex-1 bg-gray-50">
@@ -17,7 +14,7 @@ const user = await AccountUsecase.getMyDetails();
             class="h-full w-full object-cover rounded-full"/>
         </div>
         <div>
-          <h1 class="text-2xl font-bold text-gray-900">{user.email}님의 프로필</h1>
+          <h1 class="text-2xl font-bold text-gray-900 account-title">님의 프로필</h1>
           <p class="text-gray-600">계정 정보 관리</p>
         </div>
       </div>
@@ -93,6 +90,14 @@ import { atom } from "nanostores";
 import { toast } from "sonner";
 import { AccountUsecase } from '@/feature/account/domain/usecase/AccountUsecase';
 import { Account } from "@/feature/account/domain/entities";
+import { useAccount } from "@/feature/account/components/hooks";
+
+const renderAccountTitle = async () => {
+  await useAccount(account => {
+    const profileTitle = window.document.querySelector('.account-title');
+    profileTitle!.textContent = account.email + profileTitle?.textContent
+  })
+}
 
 const filledRequiredFieldsAtom = atom({
   currentPassword: false,
@@ -134,7 +139,6 @@ const submitPasswordUpdate = (
     });
 
     const validateResult = AccountUsecase.validateAccountInfo(account)[0];
-    console.log(validateResult)
     if (!validateResult.success) {
       toast("비밀번호 형식이 올바르지않습니다. ", {
         description:
@@ -164,8 +168,7 @@ const submitPasswordUpdate = (
   });
 };
 
-
-window.document.addEventListener("DOMContentLoaded", async() => {
+const passwordUpdate = async () => {
   const currentPasswordElement = window.document.querySelector<HTMLInputElement>("#current-password");
   const newPasswordElement = window.document.querySelector<HTMLInputElement>("#newPassword");
   const confirmPasswordElement = window.document.querySelector<HTMLInputElement>("#confirmPassword");
@@ -185,7 +188,6 @@ window.document.addEventListener("DOMContentLoaded", async() => {
     });
   }
 
-
   const passwordUpdateForm = window.document.getElementById(
     "password-update-form",
   );
@@ -194,5 +196,10 @@ window.document.addEventListener("DOMContentLoaded", async() => {
     const details = await AccountUsecase.getMyDetails()
     submitPasswordUpdate(passwordUpdateForm, details.email, newPasswordElement, confirmPasswordElement);
   }
+} 
+
+window.document.addEventListener("DOMContentLoaded", async() => {
+  renderAccountTitle()
+  await passwordUpdate();
 });
 </script>

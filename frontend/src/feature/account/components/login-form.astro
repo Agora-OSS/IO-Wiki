@@ -81,17 +81,17 @@ import Logo from "../../../assets/logo/bl_50_50_l.svg";
 <script>
 import { is, type IValidation } from 'typia';
 import { toast } from 'sonner';
-import type { Account } from '@/feature/account/domain/entities';
-import { AccountUsecase } from '@/feature/account/domain/usecase/AccountUsecase';
+import { AccountUsecase } from '@/feature/account/domain/usecase'
+import { useAccount } from '@/feature/account/components/hooks'
 
-const persistentAccountMoveToRootPage = async () => {
-  const myDetails = await AccountUsecase.getMyDetails();
-  
-  if(is<Account>(myDetails)) {
-    myDetails.persistent();
-  }
-  
-  document.location.href = '/';
+const persistentAccountMoveToRootPage = () => {
+  toast.promise(useAccount, {
+    loading : "로그인 중입니다...",
+    success: () => {
+      document.location.href = '/'
+      return '로그인이완료되었습니다.'
+    }
+  })
 }
 
 document.getElementById('login-form')!.addEventListener('submit', async (event) => {
@@ -106,8 +106,6 @@ document.getElementById('login-form')!.addEventListener('submit', async (event) 
     toast.error(result.value);
   }
 
-  if(result === true) {
-    await persistentAccountMoveToRootPage()
-  }
+  persistentAccountMoveToRootPage()
 });
 </script>
