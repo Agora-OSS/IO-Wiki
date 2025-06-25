@@ -1,10 +1,10 @@
 import { Button } from "@/core/widgets/button";
 
-import type React from "react";
-import { useEffect, useState } from "react";
+import { useAccount } from "@/feature/account/components/hooks";
 import type { AccountType } from "@/feature/account/domain/entities";
 import { isEmpty, not } from "@fxts/core";
-import { useAccount } from "@/feature/account/components/hooks";
+import type React from "react";
+import { useEffect, useState } from "react";
 
 const Main: React.FC<unknown> = () => {
   const [account, setAccount] = useState<AccountType>({
