@@ -31,7 +31,7 @@ export function NavFolder({
       <button
         type="button"
         className={cn(
-          "flex w-full items-center rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground gap-3",
+          "cursor-pointer flex w-full items-center rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground gap-3",
           isOpen && "bg-accent text-accent-foreground",
         )}
         onClick={() => setIsOpen(!isOpen)}

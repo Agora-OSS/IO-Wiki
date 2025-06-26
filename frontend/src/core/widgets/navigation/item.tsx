@@ -8,7 +8,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/core/widgets/tooltip";
-import { useSidebar } from "@/feature/sidebar/components/use-sidebar";
+import { useSidebar } from "@/feature/sidebar/components/hooks/use-sidebar";
 
 import type React from "react";
 import type { HTMLAttributeAnchorTarget } from "react";
