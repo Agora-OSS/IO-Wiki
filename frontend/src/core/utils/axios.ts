@@ -1,4 +1,3 @@
-import { Account } from "@/feature/account/domain/entities";
 import Axios from "axios";
 import { toast } from "sonner";
 

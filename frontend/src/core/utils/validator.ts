@@ -1,5 +1,4 @@
 import {
-  every,
   filter,
   flat,
   forEach,
@@ -11,7 +10,6 @@ import {
 } from "@fxts/core";
 import { toast } from "sonner";
 import type { IValidation } from "typia";
-import typia from "typia";
 
 export function toEntity<T, D>(
   data: T | T[],
