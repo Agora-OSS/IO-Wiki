@@ -4,20 +4,15 @@ import {
   ArrowLeftFromLine,
   ArrowRightFromLine,
   Asterisk,
-  BookOpen,
   Command,
-  Home,
-  LogIn,
-  Menu,
+  Menu as MenuIcon,
   Plus,
-  UserPlus,
   X,
 } from "lucide-react";
-import { type PropsWithChildren, useEffect, useId, useState } from "react";
+import { type PropsWithChildren, useEffect, useState } from "react";
 
 import {
   Tooltip,
-  TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/core/widgets/tooltip";
@@ -25,15 +20,16 @@ import {
 import { cn } from "@/core/utils";
 import { useMobile } from "@/core/utils/useMobile";
 import { Button } from "@/core/widgets/button";
-import { NavFolder, NavItem } from "@/core/widgets/navigation";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
+import { NavFolder } from "@/core/widgets/navigation";
 import { useAccount } from "@/feature/account/components/hooks";
-import { fx, isEmpty, not } from "@fxts/core";
+import { Menu } from "@/feature/menu/components";
 import {
-  useSidebarMenues,
-  useSidebar,
-  useAdminSidebarMenues,
-} from "@/feature/sidebar/components/hooks";
+  AdminMenuUsecase,
+  DefaultMenuUsecase,
+} from "@/feature/menu/domain/usecase";
+import { useSidebar } from "@/feature/sidebar/components/hooks";
+import { isEmpty } from "@fxts/core";
+import { ScrollArea } from "@radix-ui/react-scroll-area";
 
 export const Sidebar: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
   const [isAuthenticated, setIsAthenticated] = useState<boolean>(false);
@@ -48,10 +44,8 @@ export const Sidebar: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
     open,
     close,
   } = useSidebar();
-  const { menues: defaultMenues, render: defaultMenuesRender } =
-    useSidebarMenues();
-  const { menues: adminMenues, render: adminMenuesRender } =
-    useAdminSidebarMenues();
+  const defaultMenu = DefaultMenuUsecase.getMenues();
+  const adminMenu = AdminMenuUsecase.getMenues();
 
   const handleCreateDocument = () => {
     setIsCreateDocumentOpen(true);
@@ -136,24 +130,15 @@ export const Sidebar: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
           </div>
           <ScrollArea className="flex-1 py-2">
             <nav className="grid gap-1 px-2">
-              {defaultMenuesRender(
-                defaultMenues,
-                sidebarCollapsedState && !isMobile,
-              )}
-              {isAuthenticated && (
-                <NavFolder
-                  label="Admin"
-                  icon={Asterisk}
-                  depth={0}
-                  collapsed={sidebarCollapsedState}
-                >
-                  {adminMenuesRender(
-                    adminMenues,
-                    sidebarCollapsedState && !isMobile,
-                    0,
-                  )}
-                </NavFolder>
-              )}
+              <Menu menues={defaultMenu} collapsed={sidebarCollapsedState} />
+              <NavFolder
+                icon={Asterisk}
+                collapsed={sidebarCollapsedState}
+                label="Admin"
+                depth={0}
+              >
+                <Menu menues={adminMenu} collapsed={sidebarCollapsedState} />
+              </NavFolder>
             </nav>
           </ScrollArea>
 
@@ -167,7 +152,7 @@ export const Sidebar: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
                     onClick={() => handleCreateDocument()}
                   >
                     <Plus className="h-4 w-4" />
-                    <span>새로운 문서 생성</span>
+                    <span>New Document</span>
                   </Button>
                 </TooltipTrigger>
               </Tooltip>
@@ -190,7 +175,7 @@ export const Sidebar: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
       {isMobile && (
         <div className="absolute w-full border-b p-4">
           <Button variant="ghost" size="icon" onClick={() => open()}>
-            <Menu className="h-6 w-6" />
+            <MenuIcon className="h-6 w-6" />
             <span className="sr-only">Open menu</span>
           </Button>
         </div>
