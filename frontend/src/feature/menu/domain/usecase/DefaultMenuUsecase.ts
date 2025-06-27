@@ -1,7 +1,7 @@
 import type { MenuUsecase } from "@/feature/menu/domain/usecase/MenuUsecase";
-import { Menu, type MenuType } from "@/feature/menu/domain/entity";
+import type { MenuType } from "@/feature/menu/domain/entity";
 import { BookOpen, LogIn, UserPlus } from "lucide-react";
-import { fx, pipe } from "@fxts/core";
+import { fx } from "@fxts/core";
 
 class DefaultMenuUsecase implements MenuUsecase {
   getMenues(): MenuType[] {

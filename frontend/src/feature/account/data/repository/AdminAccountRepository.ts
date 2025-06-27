@@ -1,4 +1,3 @@
-import type { AccountType } from "../../domain/entities";
 import { adminApi } from "../datasource";
 
 export const initializeAdminAccount = async (email: string) => {

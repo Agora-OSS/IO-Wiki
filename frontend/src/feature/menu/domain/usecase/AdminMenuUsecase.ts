@@ -1,7 +1,7 @@
-import type { MenuUsecase } from "@/feature/menu/domain/usecase/MenuUsecase";
 import type { MenuType } from "@/feature/menu/domain/entity";
-import { BookDashed, BookOpen, Users } from "lucide-react";
+import type { MenuUsecase } from "@/feature/menu/domain/usecase/MenuUsecase";
 import { fx } from "@fxts/core";
+import { BookDashed, UserCheck, UserCog, Users } from "lucide-react";
 
 class AdminMenuUsecase implements MenuUsecase {
   getMenues(): MenuType[] {
@@ -22,14 +22,14 @@ class AdminMenuUsecase implements MenuUsecase {
         childMenu: [
           {
             sort: 1,
-            icon: Users,
+            icon: UserCheck,
             label: "SignUp Approval",
             href: "/admin/approval",
             target: "_self",
           },
           {
             sort: 2,
-            icon: Users,
+            icon: UserCog,
             label: "Member List",
             href: "/admin/list",
             target: "_self",

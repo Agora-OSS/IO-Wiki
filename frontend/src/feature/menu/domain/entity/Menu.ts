@@ -1,5 +1,5 @@
-import type { HTMLAttributeAnchorTarget } from "react";
 import type { ExtractEntityProperty } from "@/core/utils/types";
+import type { HTMLAttributeAnchorTarget } from "react";
 
 export type MenuType = ExtractEntityProperty<Menu> & {
   icon: React.ElementType &
