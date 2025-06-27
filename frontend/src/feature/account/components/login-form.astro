@@ -13,14 +13,14 @@ import Logo from "../../../assets/logo/bl_50_50_l.svg";
   </div>
 
   <!-- 로그인 폼 -->
-  <form method="post" class="mt-8 space-y-6 w-1/2">
+  <form id="login-form" method="post" class="mt-8 space-y-6 w-1/2">
     <div class="space-y-6">
       <div>
         <label for="email" class="block text-sm font-medium">
           이메일
         </label>
         <Input
-          client:load
+          client:only="react"
           id="email"
           name="email"
           type="email"
@@ -35,7 +35,7 @@ import Logo from "../../../assets/logo/bl_50_50_l.svg";
           비밀번호
         </label>
         <Input
-        client:load
+          client:only="react"
           id="password"
           name="password"
           type="password"
@@ -57,6 +57,7 @@ import Logo from "../../../assets/logo/bl_50_50_l.svg";
 
     <div>
       <Button
+        client:only="react"
         type="submit"
         className="w-full bg-black text-white py-2 px-4 rounded-md cursor-pointer"
       >
@@ -76,3 +77,35 @@ import Logo from "../../../assets/logo/bl_50_50_l.svg";
     </p>
   </div>
 </div>
+
+<script>
+import { is, type IValidation } from 'typia';
+import { toast } from 'sonner';
+import { AccountUsecase } from '@/feature/account/domain/usecase'
+import { useAccount } from '@/feature/account/components/hooks'
+
+const persistentAccountMoveToRootPage = () => {
+  toast.promise(useAccount, {
+    loading : "로그인 중입니다...",
+    success: () => {
+      document.location.href = '/'
+      return '로그인이완료되었습니다.'
+    }
+  })
+}
+
+document.getElementById('login-form')!.addEventListener('submit', async (event) => {
+  event.preventDefault();
+
+  const result = await AccountUsecase.login({
+    email: (document.querySelector('#email') as HTMLInputElement).value,
+    password: (document.querySelector('#password') as HTMLInputElement).value
+  });
+
+  if(is<IValidation.IError>(result)) {
+    toast.error(result.value);
+  }
+
+  persistentAccountMoveToRootPage()
+});
+</script>

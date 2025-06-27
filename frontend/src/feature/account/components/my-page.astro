@@ -1,0 +1,205 @@
+---
+import DefaultLogo from "@/assets/logo/i_200_200_d.svg";
+import { Button } from "@/core/widgets/button";
+import { Input } from "@/core/widgets/input";
+---
+<Fragment>
+  <main class="flex-1 bg-gray-50">
+    <div class="p-8">
+      <div class="mb-8 flex items-center">
+        <div class="mr-6 h-20 w-20 rounded-full bg-gray-300 flex items-center justify-center overflow-hidden">
+          <img
+            src={DefaultLogo.src}
+            alt="프로필 사진"
+            class="h-full w-full object-cover rounded-full"/>
+        </div>
+        <div>
+          <h1 class="text-2xl font-bold text-gray-900 account-title">님의 프로필</h1>
+          <p class="text-gray-600">계정 정보 관리</p>
+        </div>
+      </div>
+
+      <div class="max-w-md">
+        <div class="mb-6">
+          <h2 class="text-lg font-semibold text-gray-900 mb-2">비밀번호 변경</h2>
+          <p class="text-sm text-gray-600 mb-6">계정 보안을 위해 주기적으로 비밀번호를 변경하세요</p>
+        </div>
+
+        <form id="password-update-form" class="space-y-4">
+          <div class="space-y-2">
+            <label for="email" class="block text-sm font-medium">
+              현재 비밀번호
+            </label>
+            <Input
+              client:load
+              id="current-password"
+              type="password"
+              placeholder="••••••••"
+              name="currentPassword"
+              required
+              className="mt-1 block w-full border dark:border-gray-300 rounded-md"
+            />
+          </div>
+
+          <div class="space-y-2">
+            <label for="email" class="block text-sm font-medium">
+              새 비밀번호
+            </label>
+            <Input
+              client:load
+              id="newPassword"
+              type="password"
+              placeholder="••••••••"
+              name="newPassword"
+              required
+              className="mt-1 block w-full border dark:border-gray-300 rounded-md"
+            />
+          </div>
+
+          <div class="space-y-2">
+            <label for="email" class="block text-sm font-medium">
+              새 비밀번호 확인
+            </label>
+            <Input
+              client:load
+              id="confirmPassword"
+              type="password"
+              placeholder="••••••••"
+              name="confirmPassword"
+              required
+              className="mt-1 block w-full border dark:border-gray-300 rounded-md"
+            />
+          </div>
+
+          <Button
+            client:load
+            type="submit"
+            className="w-full bg-black text-white py-2 px-4 rounded-md cursor-pointer"
+            disabled
+          >
+            비밀번호 변경
+          </Button>
+        </form>
+      </div>
+    </div>
+  </main>
+</Fragment>
+
+<script>
+import { atom } from "nanostores";
+import { toast } from "sonner";
+import { AccountUsecase } from '@/feature/account/domain/usecase/AccountUsecase';
+import { Account } from "@/feature/account/domain/entities";
+import { useAccount } from "@/feature/account/components/hooks";
+
+const renderAccountTitle = async () => {
+  await useAccount(account => {
+    const profileTitle = window.document.querySelector('.account-title');
+    profileTitle!.textContent = account.email + profileTitle?.textContent
+  })
+}
+
+const filledRequiredFieldsAtom = atom({
+  currentPassword: false,
+  newPassword: false,
+  confirmPassword: false,
+});
+
+const getFilledRequiredFieldsAtom = () => filledRequiredFieldsAtom;
+
+const applyPasswordUpdateEvent = (
+  element: HTMLInputElement | null,
+  target: string,
+) => {
+  if (element !== null) {
+    element.addEventListener("change", (event: Event) => {
+      filledRequiredFieldsAtom.set({
+        ...filledRequiredFieldsAtom.get(),
+        [target]: (event?.target as HTMLInputElement).value.length > 0,
+      });
+    });
+  }
+};
+
+const submitPasswordUpdate = (
+  formElement: HTMLElement,
+  email: string,
+  newPasswordElement: HTMLElement,
+  confirmPasswordElement: HTMLElement,
+) => {
+  const newPassword = newPasswordElement as HTMLInputElement;
+  const confirmPassword = confirmPasswordElement as HTMLInputElement;
+
+  formElement.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const account = Account.create({
+      email,
+      password: newPassword.value,
+    });
+
+    const validateResult = AccountUsecase.validateAccountInfo(account)[0];
+    if (!validateResult.success) {
+      toast("비밀번호 형식이 올바르지않습니다. ", {
+        description:
+          "비밀번호는 8자 이상, 영문 대소문자를 포함해야 합니다.",
+      });
+      return;
+    }
+
+    if (newPassword.value !== confirmPassword.value) {
+      toast("새 비밀번호와 확인 비밀번호가 일치하지 않습니다.");
+      return;
+    }
+
+    // AccountUsecase.updatePassword({
+    //   email,
+    //   currentPassword,
+    //   newPassword.value,
+    // })
+    //   .then(() => {
+    //     alert("비밀번호가 성공적으로 변경되었습니다.");
+    //     window.location.reload();
+    //   })
+    //   .catch((error) => {
+    //     console.error(error);
+    //     alert("비밀번호 변경에 실패했습니다. 다시 시도해주세요.");
+    //   });
+  });
+};
+
+const passwordUpdate = async () => {
+  const currentPasswordElement = window.document.querySelector<HTMLInputElement>("#current-password");
+  const newPasswordElement = window.document.querySelector<HTMLInputElement>("#newPassword");
+  const confirmPasswordElement = window.document.querySelector<HTMLInputElement>("#confirmPassword");
+
+  applyPasswordUpdateEvent(currentPasswordElement, "currentPassword");
+  applyPasswordUpdateEvent(newPasswordElement, "newPassword");
+  applyPasswordUpdateEvent(confirmPasswordElement, "confirmPassword");
+
+  const passwordUpdateButton = window.document.querySelector<HTMLButtonElement>(
+    "#password-update-form button[type='submit']"
+  );
+
+  if (passwordUpdateButton) {
+    getFilledRequiredFieldsAtom().subscribe((filledFields) => {
+      const isFormValid = Object.values(filledFields).every((field) => field === true);
+      passwordUpdateButton.disabled = !isFormValid;
+    });
+  }
+
+  const passwordUpdateForm = window.document.getElementById(
+    "password-update-form",
+  );
+
+  if (passwordUpdateForm && newPasswordElement && confirmPasswordElement) {
+    const details = await AccountUsecase.getMyDetails()
+    submitPasswordUpdate(passwordUpdateForm, details.email, newPasswordElement, confirmPasswordElement);
+  }
+} 
+
+window.document.addEventListener("DOMContentLoaded", async() => {
+  renderAccountTitle()
+  await passwordUpdate();
+});
+</script>

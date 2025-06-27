@@ -1,0 +1,70 @@
+---
+import Layout from "@/core/layouts/Layout.astro";
+import { Alert, AlertDescription } from "@/core/widgets/alert";
+import { Button } from "@/core/widgets/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/core/widgets/card";
+import { AlertTriangle, Bug, Home, RefreshCw } from "lucide-react";
+
+interface Props {
+  error: Error;
+}
+
+const { error } = Astro.props;
+
+const isDevelopment = process.env.NODE_ENV === "development";
+---
+<Layout>
+  <div class="min-h-screen bg-background flex items-center justify-center p-4">
+    <Card className="w-full max-w-lg">
+      <CardHeader className="text-center">
+        <div class="mx-auto mb-4 h-20 w-20 rounded-full bg-destructive/10 flex items-center justify-center">
+          <AlertTriangle className="h-10 w-10 text-destructive" />
+        </div>
+        <CardTitle className="text-2xl">문제가 발생했습니다</CardTitle>
+        <CardDescription>예상치 못한 오류가 발생했습니다. 잠시 후 다시 시도해주세요.</CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <div class="text-center">
+          <div class="text-6xl font-bold text-destructive/20 mb-2">500</div>
+          <p class="text-sm text-muted-foreground">서버에서 오류가 발생했습니다.</p>
+        </div>
+
+        {isDevelopment && error.message && (
+          <Alert variant="destructive">
+            <Bug className="h-4 w-4" />
+            <AlertDescription className="font-mono text-xs">{error.message}</AlertDescription>
+          </Alert>
+        )}
+
+        <div class="space-y-2">
+          <Button id="refresh" className="w-full">
+            <RefreshCw className="mr-2 h-4 w-4" />
+            다시 시도
+          </Button>
+
+          <Button id="go-home" variant="outline" className="w-full">
+            <Home className="mr-2 h-4 w-4" />
+            홈으로 이동
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
+  </div>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelector<HTMLButtonElement>('#refresh')?.addEventListener('click', () => {
+      location.reload()
+    })
+    
+    document.querySelector<HTMLButtonElement>('#go-back')?.addEventListener('click', () => {
+      window.history.go(-1);
+    })
+  })
+</script>
+</Layout>

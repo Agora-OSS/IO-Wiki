@@ -1,3 +1,3 @@
-import { navigationUsecase as NavigationUsecase } from "@/feature/sidebar/domain/usecase/navigation-usecase";
+import { navigationUsecase as NavigationUsecase } from "@/feature/sidebar/domain/usecase/NavigationUsecase";
 
 export { NavigationUsecase };

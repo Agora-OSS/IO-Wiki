@@ -3,28 +3,38 @@
 import {
   ArrowLeftFromLine,
   ArrowRightFromLine,
-  BookOpen,
+  Asterisk,
   Command,
-  Home,
-  LifeBuoy,
-  LogIn,
-  Menu,
-  UserPlus,
+  Menu as MenuIcon,
+  Plus,
   X,
 } from "lucide-react";
-import { type PropsWithChildren, useState } from "react";
+import { type PropsWithChildren, useEffect, useState } from "react";
 
-import { TooltipProvider } from "@/core/widgets/tooltip";
+import {
+  Tooltip,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/core/widgets/tooltip";
 
 import { cn } from "@/core/utils";
 import { useMobile } from "@/core/utils/useMobile";
 import { Button } from "@/core/widgets/button";
-import { NavItem } from "@/core/widgets/navigation";
+import { NavFolder } from "@/core/widgets/navigation";
+import { useAccount } from "@/feature/account/components/hooks";
+import { Menu } from "@/feature/menu/components";
+import {
+  AdminMenuUsecase,
+  DefaultMenuUsecase,
+} from "@/feature/menu/domain/usecase";
+import { useSidebar } from "@/feature/sidebar/components/hooks";
+import { isEmpty } from "@fxts/core";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
-import { useSidebar } from "./use-sidebar";
 
 export const Sidebar: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
+  const [isAuthenticated, setIsAthenticated] = useState<boolean>(false);
   const [isCreateDocumentOpen, setIsCreateDocumentOpen] = useState(false);
+  const accountHook = useAccount();
   const isMobile = useMobile();
   const {
     sidebarCollapsedState,
@@ -34,7 +44,8 @@ export const Sidebar: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
     open,
     close,
   } = useSidebar();
-  // 모바일에서는 항상 전체 너비로 표시
+  const defaultMenu = DefaultMenuUsecase.getMenues();
+  const adminMenu = AdminMenuUsecase.getMenues();
 
   const handleCreateDocument = () => {
     setIsCreateDocumentOpen(true);
@@ -46,6 +57,14 @@ export const Sidebar: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
       close();
     }
   };
+
+  useEffect(() => {
+    accountHook.then((account) => {
+      isEmpty(account.email)
+        ? setIsAthenticated(false)
+        : setIsAthenticated(true);
+    });
+  }, [accountHook]);
 
   return (
     <>
@@ -111,66 +130,34 @@ export const Sidebar: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
           </div>
           <ScrollArea className="flex-1 py-2">
             <nav className="grid gap-1 px-2">
-              <NavItem
-                icon={Home}
-                label="Home"
-                href="/"
-                collapsed={sidebarCollapsedState && !isMobile}
-                target="_self"
-              />
-
-              {/* TODO : Implement Authentication Logic
-              {isAuthenticated ? (
-                children
-              ) : ( */}
-              <>
-                <NavItem
-                  icon={LogIn}
-                  label="로그인"
-                  href="/login"
-                  collapsed={sidebarCollapsedState && !isMobile}
-                  target="_self"
-                />
-                <NavItem
-                  icon={UserPlus}
-                  label="회원가입"
-                  href="/register"
-                  collapsed={sidebarCollapsedState && !isMobile}
-                  target="_self"
-                />
-                <NavItem
-                  icon={BookOpen}
-                  label="Documentation"
-                  href="/docs"
-                  collapsed={sidebarCollapsedState && !isMobile}
-                />
-              </>
-              {/* TODO : Implement Authentication Logic
-              )}
-               */}
+              <Menu menues={defaultMenu} collapsed={sidebarCollapsedState} />
+              <NavFolder
+                icon={Asterisk}
+                collapsed={sidebarCollapsedState}
+                label="Admin"
+                depth={0}
+              >
+                <Menu menues={adminMenu} collapsed={sidebarCollapsedState} />
+              </NavFolder>
             </nav>
           </ScrollArea>
-          {/* TODO : Implement Authentication Logic
 
-            <div className="border-t p-2">
-            {isAuthenticated && (
+          <div className="border-t p-2">
+            {!sidebarCollapsedState && isAuthenticated && (
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Button
                     variant="outline"
-                    className={`w-full justify-center gap-2 ${collapsed && !isMobile ? "px-2" : ""}`}
-                    onClick={handleCreateDocument}
+                    className={`w-full justify-center gap-2 ${!isMobile ? "px-2" : ""}`}
+                    onClick={() => handleCreateDocument()}
                   >
                     <Plus className="h-4 w-4" />
-                    {(!collapsed || isMobile) && <span>새로운 문서 생성</span>}
+                    <span>New Document</span>
                   </Button>
                 </TooltipTrigger>
-                {collapsed && !isMobile && (
-                  <TooltipContent side="right">새로운 문서 생성</TooltipContent>
-                )}
               </Tooltip>
-            )} 
-          </div>*/}
+            )}
+          </div>
 
           {!isMobile && sidebarCollapsedState && (
             <Button
@@ -188,7 +175,7 @@ export const Sidebar: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
       {isMobile && (
         <div className="absolute w-full border-b p-4">
           <Button variant="ghost" size="icon" onClick={() => open()}>
-            <Menu className="h-6 w-6" />
+            <MenuIcon className="h-6 w-6" />
             <span className="sr-only">Open menu</span>
           </Button>
         </div>

@@ -1,4 +1,3 @@
-import { examHandlers } from "@/mock/exam";
-import { accountHandler } from "@/mock/account";
+import { accountHandlers } from "@/mock/account";
 
-export default [...examHandlers, ...accountHandler];
+export default [...accountHandlers];

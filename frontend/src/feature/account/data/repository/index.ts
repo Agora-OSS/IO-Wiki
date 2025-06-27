@@ -1,6 +1,24 @@
 import {
+  checkEmailExsist,
   createAccount,
   doLogin,
+  getMyDetails,
 } from "@/feature/account/data/repository/AccountRepository";
+import {
+  approveMember,
+  initializeAdminAccount,
+  rejectMember,
+} from "@/feature/account/data/repository/AdminAccountRepository";
 
-export { createAccount, doLogin };
+export const AccountRepository = {
+  createAccount,
+  doLogin,
+  checkEmailExsist,
+  getMyDetails,
+};
+
+export const AdminAccountRepository = {
+  approveMember,
+  rejectMember,
+  initializeAdminAccount,
+};

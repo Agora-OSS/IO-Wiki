@@ -1,6 +1,26 @@
 import {
+  callEmailExsist,
+  callGetMyDetails,
   callLogin,
   callRegist,
 } from "@/feature/account/data/datasource/AccountApi";
+import {
+  callApproveMember,
+  callInitPassword,
+  callRejectMember,
+} from "@/feature/account/data/datasource/AdminAccountApi";
 
-export { callLogin, callRegist };
+const publicApi = {
+  callLogin,
+  callRegist,
+  callEmailExsist,
+  callGetMyDetails,
+};
+
+const adminApi = {
+  callApproveMember,
+  callRejectMember,
+  callInitPassword,
+};
+
+export { publicApi, adminApi };

@@ -2,23 +2,6 @@
 import { Button } from "@/core/widgets/button";
 import { Input } from "@/core/widgets/input";
 import Logo from "../../../assets/logo/bl_50_50_l.svg";
-
-const formError = {
-  email: {
-    isValid: true,
-  },
-  password: {
-    isValid: true,
-  },
-  passwordCheck: {
-    isValid: true,
-  },
-};
-const request = Astro.request;
-
-if (request.method === "POST") {
-  // TODO : Validate and persistant
-}
 ---
 
 <div class="flex flex-col items-center justify-center min-h-screen px-4">
@@ -29,8 +12,8 @@ if (request.method === "POST") {
     </div>
   </div>
 
-  {/* 로그인 폼 */}
-  <form method="post" class="mt-8 space-y-6 w-1/2">
+  {/* 회원가입 폼 */}
+  <form id="sign-up-form" class="mt-8 space-y-6 w-1/2">
     <div class="space-y-6">
       <div>
         <label for="email" class="block text-sm font-medium">
@@ -108,3 +91,49 @@ if (request.method === "POST") {
     </p>
   </div>
 </div>
+
+<script>
+  import { AccountUsecase } from '@/feature/account/domain/usecase/AccountUsecase'
+  import { toast } from 'sonner'
+  import { is, type IValidation } from 'typia'
+  import { displayErrors, validateDisplayErrorThenHasError } from '@/core/utils/validator'
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.querySelector<HTMLFormElement>('#sign-up-form')!;
+    
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      // Get form values
+      const email = document.querySelector<HTMLInputElement>('#email')!.value.trim();
+      const password = document.querySelector<HTMLInputElement>('#password')!.value;
+      const passwordCheck = document.querySelector<HTMLInputElement>('#password-check')!.value;
+      
+      const accountValidate = AccountUsecase.validateAccountInfo({ email, password })
+      const emailValidateResult = await AccountUsecase.checkEmailExsist({ email, password })
+      
+      // Account Regexp error display
+      if(validateDisplayErrorThenHasError(accountValidate)) return;
+      // has same email check
+      if(is<IValidation.IError[]>(emailValidateResult)) { displayErrors(emailValidateResult); return; }
+      else if(emailValidateResult.exists === true) {toast.error('이미 존재하는 이메일입니다.'); return;}
+      // Check if passwords match
+      if (password !== passwordCheck) {  return; }
+      
+      try {
+        // Call the AccountUsecase.register method
+        const response = await AccountUsecase.register({
+          email,
+          password
+        });
+        
+        // Handle successful registration
+        console.log('Registration successful:', response);
+        alert("회원가입이 정상적으로 처리되었습니다. 관리자 승인을 기다려주세요.")
+        window.location.href = '/login'; // Redirect to login page
+      } catch (error) {
+        console.error('Registration failed:', error);
+      }
+    });
+  });
+</script>

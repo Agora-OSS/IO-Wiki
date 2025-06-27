@@ -1,11 +1,12 @@
 // @ts-check
 import react from "@astrojs/react";
-import vue from "@astrojs/vue";
 import UnpluginTypia from "@ryoppippi/unplugin-typia/vite";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
-import checker from "vite-plugin-checker";
 import astrobook from "astrobook";
+import checker from "vite-plugin-checker";
+import devtoolsJson from "vite-plugin-devtools-json";
+import mkcert from "vite-plugin-mkcert";
 
 // https://astro.build/config
 export default defineConfig({
@@ -14,7 +15,6 @@ export default defineConfig({
   output: "static",
   integrations: [
     react(),
-    vue(),
     astrobook({
       directory: "src",
       head: "src/core/layouts/Layout.astro",
@@ -22,7 +22,33 @@ export default defineConfig({
     }),
   ],
   vite: {
+    server: {
+      https: {
+        key: ".certs/local-key.pem",
+        cert: ".certs/local-cert.pem",
+      },
+      host: true,
+      port: 443,
+      proxy: {
+        "/admin-api": {
+          target: "http://localhost:8080",
+          changeOrigin: false,
+          secure: false,
+        },
+        "/api": {
+          target: "http://localhost:8080",
+          changeOrigin: false,
+          secure: false,
+        },
+      },
+    },
     plugins: [
+      mkcert({
+        force: true,
+        savePath: "./.certs",
+        keyFileName: "local-key.pem",
+        certFileName: "local-cert.pem",
+      }),
       checker({
         typescript: true,
         root: "./",
@@ -32,6 +58,7 @@ export default defineConfig({
       }),
       tailwindcss(),
       UnpluginTypia({ tsconfig: "./tsconfig.json" }),
+      devtoolsJson(),
     ],
   },
 });

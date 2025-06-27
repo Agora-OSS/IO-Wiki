@@ -1,6 +1,7 @@
 ---
 import "@/styles/global.css";
 import { Sidebar } from "@/feature/sidebar/components";
+import { Toaster } from "sonner";
 ---
 
 <!doctype html>
@@ -34,9 +35,10 @@ import { Sidebar } from "@/feature/sidebar/components";
 		<title>IO Wiki</title>
 	</head>
 	<body>
-		<div class="flex gap-4">
+		<Toaster client:only="react"/>
+		<div class="flex">
 			<Sidebar client:only="react"/>
-			<div class="flex-1">
+			<div class="flex-1 mt-20 md:mt-0">
 				<slot />
 			</div>
 		</div>

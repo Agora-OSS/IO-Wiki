@@ -1,3 +1,11 @@
-export type LoginProtocol = boolean;
+export type LoginSuccessProtocol = {
+  redirectUrl: string;
+};
 
-export type AccountRegistProtocol = boolean;
+export type EmailExsistProtocol = {
+  exists: boolean;
+};
+
+export type AccountDetailsProtocol = {
+  email: string;
+};

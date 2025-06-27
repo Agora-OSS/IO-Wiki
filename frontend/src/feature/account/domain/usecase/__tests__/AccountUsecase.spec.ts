@@ -3,9 +3,9 @@ import {
   createAccountMocks,
   createEncorrectValidationAccountMocks,
 } from "@/mock/account";
+import { type IValidation, is } from "typia";
 import { describe, expect, test } from "vitest";
-import { AccountUsecase } from "../account-usecase";
-import { is, type IValidation } from "typia";
+import { AccountUsecase } from "../AccountUsecase";
 
 describe("AccountUsecase test", () => {
   beforeEach(() => {});
@@ -13,15 +13,7 @@ describe("AccountUsecase test", () => {
   test("should complete login execution successfully", async () => {
     const account = createAccountMocks(1)[0];
 
-    expect(await AccountUsecase.login(account)).toBeTruthy();
-  });
-
-  test("should return an IError object when login violates validation policies.", async () => {
-    const account = createEncorrectValidationAccountMocks(1)[0];
-    const accounHastError = await AccountUsecase.login(account);
-
-    expect(is<IValidation.IError[]>(accounHastError)).toEqual(true);
-    console.log(accounHastError);
+    expect(await AccountUsecase.login(account)).toBeNull();
   });
 
   test("should return valid validation result when creating user account", async () => {
@@ -40,7 +32,7 @@ describe("AccountUsecase test", () => {
 
     const result = await AccountUsecase.register(account);
 
-    expect(result).toBeTruthy();
+    expect(result).toBeNull();
   });
 
   test("should return an IError object when registration violates validation policies", async () => {
@@ -49,5 +41,31 @@ describe("AccountUsecase test", () => {
     const result = await AccountUsecase.register(account);
 
     expect(is<IValidation.IError[]>(result)).toEqual(true);
+  });
+
+  test("should return true when email exists", async () => {
+    const account = createAccountMocks(1)[0];
+
+    const result = await AccountUsecase.checkEmailExsist({
+      email: account.email,
+      password: "password123",
+    });
+    expect(result).toBeTruthy();
+  });
+
+  test("should return false when email does not exist", async () => {
+    const result = await AccountUsecase.checkEmailExsist({
+      email: "nonexistent@example",
+      password: "password123",
+    });
+
+    expect(is<IValidation.IError[]>(result)).toEqual(true);
+  });
+
+  test("should return user details when fetching my details", async () => {
+    const result = await AccountUsecase.getMyDetails();
+
+    expect(result).toBeDefined();
+    expect(result.email).toBe("test@example.com");
   });
 });

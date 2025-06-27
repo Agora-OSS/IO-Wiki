@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { createAccount, doLogin } from "../AccountRepository";
+import { checkEmailExsist, createAccount, doLogin } from "../AccountRepository";
 
 describe("AccountRepositoryImpl Test", () => {
   test("should return true when login is successful", async () => {
@@ -8,7 +8,7 @@ describe("AccountRepositoryImpl Test", () => {
       password: "testPassword123",
     });
 
-    expect(loginResult).toBe(true);
+    expect(loginResult).toBeNull();
   });
 
   test("should return true when createAccount is successful", async () => {
@@ -17,6 +17,12 @@ describe("AccountRepositoryImpl Test", () => {
       password: "testPassword123",
     });
 
-    expect(loginResult).toBe(true);
+    expect(loginResult).toBeNull();
+  });
+
+  test("should return true when checkSameEmail is successful", async () => {
+    const emailCheckResult = await checkEmailExsist("testUser@email.com");
+
+    expect(emailCheckResult.exists).toBe(false);
   });
 });

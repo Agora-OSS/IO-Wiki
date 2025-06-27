@@ -8,10 +8,10 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/core/widgets/tooltip";
-import { useSidebar } from "@/feature/sidebar/components/use-sidebar";
+import { useSidebar } from "@/feature/sidebar/components/hooks/use-sidebar";
 
 import type React from "react";
-import type { HTMLAttributeAnchorTarget } from "react";
+import type { HTMLAttributeAnchorTarget, PropsWithChildren } from "react";
 
 interface NavItemProps {
   icon: React.ElementType;
@@ -27,7 +27,7 @@ export function NavItem({
   href,
   collapsed,
   target = "_blank",
-}: NavItemProps) {
+}: PropsWithChildren<NavItemProps>) {
   const { close } = useSidebar();
   const isMobile = useMobile();
 
