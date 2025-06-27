@@ -1,6 +1,5 @@
 // @ts-check
 import react from "@astrojs/react";
-import vue from "@astrojs/vue";
 import UnpluginTypia from "@ryoppippi/unplugin-typia/vite";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
@@ -16,7 +15,6 @@ export default defineConfig({
   output: "static",
   integrations: [
     react(),
-    vue(),
     astrobook({
       directory: "src",
       head: "src/core/layouts/Layout.astro",
